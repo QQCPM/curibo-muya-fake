@@ -1,0 +1,539 @@
+/**
+ * Muya Editor Custom Style Overrides for Inkdown
+ *
+ * This file contains custom styling for the @muyajs/core editor.
+ * Note: The new Muya uses 'mu-' class prefix, but some components
+ * may still use 'ag-' prefix. Both are included for compatibility.
+ */
+
+/* ============================================
+ * BASE EDITOR STYLES
+ * ============================================ */
+
+/* Editor typography */
+.muya-editor h1,
+.muya-editor h2,
+.muya-editor h3,
+.muya-editor h4,
+.muya-editor h5,
+.muya-editor h6 {
+  color: var(--text-color);
+  font-weight: 600;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.muya-editor h1 { font-size: 2em; }
+.muya-editor h2 { font-size: 1.5em; }
+.muya-editor h3 { font-size: 1.25em; }
+
+.muya-editor p {
+  margin-bottom: 1em;
+}
+
+/* ============================================
+ * INLINE CODE
+ * ============================================ */
+
+.muya-editor code {
+  background: var(--bg-color, rgba(100, 100, 100, 0.2));
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+
+.muya-editor pre {
+  background: var(--bg-color, rgba(0, 0, 0, 0.2));
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+/* ============================================
+ * BLOCKQUOTES
+ * ============================================ */
+
+.muya-editor blockquote {
+  margin: 16px 0;
+  padding: 12px 20px;
+  border-left: 4px solid var(--primary-color, #65b9f4);
+  background: rgba(100, 100, 100, 0.05);
+  border-radius: 0 8px 8px 0;
+  color: var(--text-color-secondary, #aaa);
+}
+
+.muya-editor blockquote blockquote {
+  margin-left: 0;
+}
+
+/* ============================================
+ * LINKS
+ * ============================================ */
+
+.muya-editor a {
+  color: var(--primary-color, #65b9f4);
+  text-decoration: none;
+}
+
+.muya-editor a:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+ * TABLES
+ * ============================================ */
+
+.muya-editor table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  background: transparent;
+}
+
+.muya-editor th,
+.muya-editor td {
+  padding: 6px 13px;
+  text-align: left;
+  border: 1px solid var(--border-color, #333);
+}
+
+.muya-editor th {
+  background: rgba(100, 100, 100, 0.15);
+  font-weight: 600;
+}
+
+.muya-editor tr:nth-child(even) {
+  background: rgba(100, 100, 100, 0.05);
+}
+
+.muya-editor tr:hover td {
+  background: var(--editorColor04, rgba(255, 255, 255, 0.04));
+}
+
+/* ============================================
+ * HORIZONTAL RULE
+ * ============================================ */
+
+.muya-editor hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--border-color, #444), transparent);
+  margin: 32px 0;
+}
+
+/* ============================================
+ * IMAGES
+ * ============================================ */
+
+.muya-editor img {
+  max-width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ============================================
+ * FOCUS MODE
+ * ============================================ */
+
+.focus-mode .muya-editor .mu-paragraph:not(.mu-active),
+.focus-mode .muya-editor .ag-paragraph:not(.ag-active) {
+  opacity: 0.3;
+}
+
+/* ============================================
+ * TYPEWRITER MODE
+ * ============================================ */
+
+.typewriter-mode .muya-editor {
+  padding-top: 40vh;
+  padding-bottom: 40vh;
+}
+
+/* ============================================
+ * MATH RENDERING (KaTeX)
+ * ============================================ */
+
+/* Inline math */
+.muya-editor .mu-inline-math,
+.muya-editor span.ag-math {
+  display: inline !important;
+  vertical-align: baseline;
+  font-family: inherit;
+}
+
+.muya-editor .mu-inline-math.mu-hide,
+.muya-editor span.ag-math.ag-hide {
+  display: inline !important;
+}
+
+.muya-editor .mu-inline-math .mu-math-render,
+.muya-editor span.ag-math.ag-hide > .ag-math-render {
+  display: inline !important;
+  position: relative !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  vertical-align: baseline !important;
+}
+
+.muya-editor .katex {
+  font-size: 1em;
+  vertical-align: baseline;
+}
+
+/* Block math */
+.muya-editor figure[data-role="MULTIPLEMATH"],
+.muya-editor .mu-math-block {
+  margin: 16px 0;
+  padding: 0;
+  background: transparent;
+}
+
+.muya-editor pre.ag-multiple-math,
+.muya-editor .mu-math-block pre {
+  margin: 0;
+  padding: 12px;
+  background: var(--codeBlockBgColor, rgba(0, 0, 0, 0.2));
+  border-radius: 6px;
+}
+
+.muya-editor .katex-display {
+  margin: 0;
+  padding: 8px 0;
+}
+
+/* ============================================
+ * CODE BLOCKS
+ * ============================================ */
+
+.muya-editor pre.ag-fence-code,
+.muya-editor .mu-code-block pre {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  margin: 16px 0;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.muya-editor pre code,
+.muya-editor .mu-code-block code {
+  font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  background: transparent;
+  padding: 0;
+}
+
+.muya-editor .ag-language-input,
+.muya-editor .mu-language-input {
+  font-size: 12px;
+  color: var(--text-color-secondary, #888);
+  background: transparent;
+  border: none;
+  padding: 4px 8px;
+  font-family: monospace;
+}
+
+/* ============================================
+ * DIAGRAMS
+ * ============================================ */
+
+.muya-editor figure[data-role="MERMAID"],
+.muya-editor figure[data-role="FLOWCHART"],
+.muya-editor figure[data-role="SEQUENCE"],
+.muya-editor figure[data-role="VEGA-LITE"],
+.muya-editor figure[data-role="PLANTUML"],
+.muya-editor .mu-diagram {
+  margin: 24px 0;
+  padding: 20px;
+  background: rgba(100, 100, 100, 0.08);
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* ============================================
+ * TASK LISTS / CHECKBOXES
+ * ============================================ */
+
+.muya-editor li.ag-task-list-item,
+.muya-editor li.mu-task-list-item {
+  list-style-type: none;
+  position: relative;
+  padding-left: 8px;
+}
+
+.muya-editor li.ag-task-list-item > input[type="checkbox"],
+.muya-editor li.mu-task-list-item > input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  left: -23px;
+  top: 0.3em;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  background: transparent;
+  border: 2px solid var(--editorColor50, rgba(128, 128, 128, 0.5));
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.muya-editor li input[type="checkbox"]:hover {
+  border-color: #6b8a73;
+}
+
+.muya-editor li input[type="checkbox"]:checked,
+.muya-editor li input.ag-checkbox-checked,
+.muya-editor li input.mu-checkbox-checked {
+  background-color: #6b8a73;
+  border-color: #6b8a73;
+}
+
+.muya-editor li input[type="checkbox"]:checked::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 10px;
+  border: 2px solid white;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+  position: absolute;
+  top: 1px;
+  left: 5px;
+}
+
+/* ============================================
+ * FOOTNOTES
+ * ============================================ */
+
+.muya-editor .ag-inline-footnote-identifier,
+.muya-editor .mu-footnote-ref {
+  vertical-align: super;
+  font-size: 0.75em;
+  color: var(--primary-color, #65b9f4);
+  cursor: pointer;
+}
+
+.muya-editor .ag-inline-footnote-identifier:hover,
+.muya-editor .mu-footnote-ref:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+ * FLOATING UI COMPONENTS
+ * ============================================ */
+
+/* Generic float wrapper */
+.mu-float-wrapper,
+.ag-float-wrapper {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  border-radius: 6px !important;
+  box-shadow: var(--floatShadow, 0 4px 16px rgba(0, 0, 0, 0.4)) !important;
+}
+
+/* Quick Insert Menu */
+.mu-quick-insert,
+.ag-quick-insert {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  border-radius: 6px !important;
+}
+
+.mu-quick-insert li:hover,
+.ag-quick-insert li:hover {
+  background: var(--floatHoverColor, rgba(255, 255, 255, 0.08)) !important;
+}
+
+/* Front Menu (paragraph menu) */
+.mu-front-menu,
+.ag-front-menu {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  border-radius: 6px !important;
+  box-shadow: var(--floatShadow, 0 4px 16px rgba(0, 0, 0, 0.4)) !important;
+  color: var(--editorColor, #d4d4d4) !important;
+}
+
+.mu-front-menu ul li:hover,
+.ag-front-menu ul li:hover {
+  background: var(--floatHoverColor, rgba(255, 255, 255, 0.08)) !important;
+}
+
+.mu-front-menu ul li > span,
+.ag-front-menu ul li > span {
+  color: var(--editorColor, #d4d4d4) !important;
+}
+
+/* Format Toolbar */
+.mu-format-toolbar,
+.ag-format-picker {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  border-radius: 6px !important;
+}
+
+.mu-format-toolbar button,
+.ag-format-picker button {
+  color: var(--editorColor, #d4d4d4) !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.mu-format-toolbar button:hover,
+.ag-format-picker button:hover {
+  background: var(--floatHoverColor, rgba(255, 255, 255, 0.1)) !important;
+}
+
+/* Code Language Selector */
+.mu-code-picker,
+.ag-code-picker {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  color: var(--editorColor, #d4d4d4) !important;
+}
+
+.mu-code-picker li:hover,
+.ag-code-picker li:hover {
+  background: var(--floatHoverColor, rgba(255, 255, 255, 0.08)) !important;
+}
+
+/* Emoji Picker */
+.mu-emoji-picker,
+.ag-emoji-picker {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+}
+
+/* Table Picker */
+.mu-table-picker,
+.ag-table-picker {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+}
+
+.mu-table-picker td,
+.ag-table-picker td {
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+}
+
+.mu-table-picker td.selected,
+.ag-table-picker td.selected {
+  background: var(--themeColor, #0078d4) !important;
+}
+
+/* Image Tools */
+.mu-image-picker,
+.mu-image-selector,
+.ag-image-picker,
+.ag-image-selector {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  border-radius: 6px !important;
+}
+
+.mu-image-picker input,
+.mu-image-selector input,
+.ag-image-picker input,
+.ag-image-selector input {
+  background: var(--editorBgColor, #1e1e1e) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  color: var(--editorColor, #d4d4d4) !important;
+  border-radius: 4px;
+  padding: 8px 12px;
+}
+
+/* Link Tools */
+.mu-link-tools,
+.ag-link-tools {
+  background: var(--floatBgColor, #2d2d30) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  border-radius: 6px !important;
+}
+
+.mu-link-tools input,
+.ag-link-tools input {
+  background: var(--editorBgColor, #1e1e1e) !important;
+  border: 1px solid var(--floatBorderColor, #454545) !important;
+  color: var(--editorColor, #d4d4d4) !important;
+}
+
+.mu-link-tools button,
+.ag-link-tools button {
+  background: var(--themeColor, #0078d4) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
+/* Table Toolbar */
+.mu-tool-bar,
+.ag-tool-bar {
+  background: var(--floatBgColor, #2d2d30);
+  border: 1px solid var(--floatBorderColor, #454545);
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.mu-tool-bar ul li,
+.ag-tool-bar ul li {
+  background: transparent;
+  border-radius: 4px;
+  color: var(--iconColor, #ccc);
+}
+
+.mu-tool-bar ul li:hover,
+.ag-tool-bar ul li:hover {
+  background: var(--floatHoverColor, rgba(255, 255, 255, 0.1));
+}
+
+/* ============================================
+ * FRONT ICON (paragraph menu indicator)
+ * ============================================ */
+
+.muya-editor .mu-front-icon,
+.muya-editor .ag-front-icon {
+  opacity: 0.5;
+  cursor: pointer;
+  color: var(--iconColor, #ccc);
+  transition: opacity 0.2s;
+}
+
+.muya-editor .mu-front-icon:hover,
+.muya-editor .ag-front-icon:hover {
+  opacity: 1;
+}
+
+/* ============================================
+ * LOADING STATE
+ * ============================================ */
+
+.editor-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--editorBgColor);
+  gap: 16px;
+  color: var(--text-color-secondary);
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

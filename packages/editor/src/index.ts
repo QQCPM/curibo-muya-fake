@@ -1,34 +1,92 @@
-// @inkdown/editor - Muya markdown editor
+/**
+ * @inkdown/editor - Main Entry Point
+ *
+ * A TypeScript wrapper around @muyajs/core that provides a backward-compatible
+ * API for the Inkdown markdown editor.
+ *
+ * @example
+ * ```typescript
+ * import { MuyaEditor, type EditorOptions } from '@inkdown/editor'
+ *
+ * const editor = new MuyaEditor(container, {
+ *   markdown: '# Hello World',
+ *   focusMode: false,
+ * })
+ *
+ * await editor.init({
+ *   imageAction: async (file) => uploadImage(file),
+ * })
+ *
+ * editor.on('change', ({ markdown, wordCount }) => {
+ *   console.log('Content changed:', wordCount.words, 'words')
+ * })
+ * ```
+ */
 
-// Main editor class will be exported after Muya migration
-// For now, re-export placeholder
+// Main editor class
+export { MuyaEditor } from './MuyaEditor'
 
-export interface EditorOptions {
-  markdown?: string
-  autoPairBracket?: boolean
-  autoPairMarkdownSyntax?: boolean
-  autoPairQuote?: boolean
-  bulletListMarker?: '-' | '*' | '+'
-  codeBlockLineNumbers?: boolean
-  hideQuickInsertHint?: boolean
-  hideLinkPopup?: boolean
-  listIndentation?: number | 'dfm'
-  orderListDelimiter?: '.' | ')'
-  preferLooseListItem?: boolean
-  spellcheckEnabled?: boolean
-  sequenceTheme?: 'hand' | 'simple'
-  tabSize?: number
-  trimUnnecessaryCodeBlockEmptyLines?: boolean
-  mermaidTheme?: 'default' | 'dark' | 'forest' | 'neutral'
-  vegaTheme?: 'latimes' | 'dark' | 'excel' | 'fivethirtyeight'
-}
+// Plugin registration utilities
+export {
+  registerMuyaPlugins,
+  resetPluginRegistration,
+  arePluginsRegistered,
+  getRegisteredPluginNames,
+} from './plugins'
 
-export interface EditorEventMap {
-  'change': { markdown: string; wordCount: { words: number; characters: number; paragraphs: number } }
-  'selection-change': { anchor: any; focus: any }
-  'stateChange': { name: string; value: any }
-  'toc-change': { toc: any[] }
-}
+// Type exports
+export type {
+  // Core types
+  EditorOptions,
+  PluginOptions,
+  TState,
 
-// Export types for now, actual Muya will be copied
-export type { EditorOptions as MuyaOptions }
+  // Event types
+  EditorEventMap,
+  EditorChangeEvent,
+  SelectionChangeEvent,
+  FormatClickEvent,
+  SelectionFormats,
+
+  // Data types
+  WordCount,
+  CursorPosition,
+  NodeOffset,
+  LegacyCursorPoint,
+  TocItem,
+  HistoryState,
+  EditorState,
+  ScrollState,
+
+  // Image types
+  ImageInfo,
+  ImageUpdateOptions,
+
+  // Format/paragraph types
+  FormatType,
+  ParagraphType,
+} from './types'
+
+// Re-export from @muyajs/core for advanced usage
+export {
+  Muya,
+  MarkdownToHtml,
+  // Locales
+  en,
+  zh,
+  ja,
+  // UI Components (for custom plugin configuration)
+  EmojiSelector,
+  InlineFormatToolbar,
+  ImageEditTool,
+  ImageResizeBar,
+  ImageToolBar,
+  CodeBlockLanguageSelector,
+  ParagraphFrontButton,
+  ParagraphFrontMenu,
+  ParagraphQuickInsertMenu,
+  TableColumnToolbar,
+  TableDragBar,
+  TableRowColumMenu,
+  PreviewToolBar,
+} from '@muyajs/core'

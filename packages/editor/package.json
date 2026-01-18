@@ -1,6 +1,7 @@
 {
   "name": "@inkdown/editor",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "description": "TypeScript markdown editor wrapper for Inkdown",
   "private": true,
   "type": "module",
   "main": "./src/index.ts",
@@ -10,26 +11,35 @@
       "import": "./src/index.ts",
       "types": "./src/index.ts"
     },
-    "./styles/*": "./src/styles/*"
+    "./styles": {
+      "import": "@muyajs/core/lib/core.css"
+    }
   },
   "scripts": {
     "build": "tsc",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint src/"
   },
   "dependencies": {
-    "dompurify": "^3.3.1",
-    "fuzzaldrin-plus": "^0.6.0",
-    "katex": "^0.16.27",
-    "marked": "^17.0.1",
-    "mermaid": "^11.12.2",
-    "prismjs": "^1.30.0",
-    "snabbdom": "^3.6.3",
-    "snabbdom-to-html": "^7.1.0"
+    "@muyajs/core": "^0.0.39"
   },
   "devDependencies": {
-    "@types/dompurify": "^3.0.5",
-    "@types/fuzzaldrin-plus": "^0.6.5",
-    "@types/prismjs": "^1.26.5",
     "typescript": "~5.7.0"
+  },
+  "peerDependencies": {
+    "katex": ">=0.16.0",
+    "mermaid": ">=11.0.0",
+    "prismjs": ">=1.29.0"
+  },
+  "peerDependenciesMeta": {
+    "katex": {
+      "optional": true
+    },
+    "mermaid": {
+      "optional": true
+    },
+    "prismjs": {
+      "optional": true
+    }
   }
 }

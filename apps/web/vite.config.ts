@@ -49,6 +49,16 @@ export default defineConfig({
     'process.platform': '"web"',
     'process.version': '"v16.0.0"'
   },
+  server: {
+    port: 5173,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  },
   optimizeDeps: {
     include: ['snapsvg', 'underscore', 'katex', 'mermaid', 'prismjs']
   },

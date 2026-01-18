@@ -15,7 +15,7 @@ import { ToolContext, ToolResult } from './core.tools'
 // Types for Embedded Databases
 // ============================================================================
 
-interface DatabaseRow {
+export interface DatabaseRow {
     id: string
     [key: string]: unknown
 }

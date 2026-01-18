@@ -1,12 +1,18 @@
 import { onMounted, ref, computed, nextTick, watch } from 'vue';
-import { useEditorStore } from '@/stores';
+import { useEditorStore, useLayoutStore } from '@/stores';
 import { FileText, Plus, X, Clock } from 'lucide-vue-next';
 import SideBar from '@/components/layout/SideBar.vue';
 import EditorArea from '@/components/editor/EditorArea.vue';
+import FormatToolbar from '@/components/editor/FormatToolbar.vue';
 import NoteOutline from '@/components/layout/NoteOutline.vue';
+import AISidebar from '@/components/ai/AISidebar.vue';
 const editorStore = useEditorStore();
+const layoutStore = useLayoutStore();
 const isReady = ref(false);
 const tabsContainerRef = ref(null);
+const editorAreaRef = ref(null);
+// Get Muya instance from EditorArea
+const muyaInstance = computed(() => editorAreaRef.value?.getMuya?.());
 const isSaved = computed(() => editorStore.activeTab?.isSaved ?? true);
 const wordCount = computed(() => {
     const wc = editorStore.wordCount;
@@ -63,15 +69,19 @@ let __VLS_directives;
 /** @type {__VLS_StyleScopedClasses['tabs-container']} */ ;
 /** @type {__VLS_StyleScopedClasses['tab']} */ ;
 /** @type {__VLS_StyleScopedClasses['tab']} */ ;
+/** @type {__VLS_StyleScopedClasses['active']} */ ;
 /** @type {__VLS_StyleScopedClasses['tab-close']} */ ;
 /** @type {__VLS_StyleScopedClasses['new-tab-btn']} */ ;
 /** @type {__VLS_StyleScopedClasses['status-badge']} */ ;
+/** @type {__VLS_StyleScopedClasses['ai-toggle-btn']} */ ;
+/** @type {__VLS_StyleScopedClasses['ai-toggle-btn']} */ ;
+/** @type {__VLS_StyleScopedClasses['active']} */ ;
 /** @type {__VLS_StyleScopedClasses['note-content']} */ ;
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "editor-view" },
 });
 /** @type {__VLS_StyleScopedClasses['editor-view']} */ ;
-if (__VLS_ctx.isReady) {
+if (__VLS_ctx.isReady && __VLS_ctx.layoutStore.sidebarVisible) {
     const __VLS_0 = SideBar;
     // @ts-ignore
     const __VLS_1 = __VLS_asFunctionalComponent1(__VLS_0, new __VLS_0({}));
@@ -95,7 +105,7 @@ for (const [tab] of __VLS_vFor((__VLS_ctx.editorStore.tabs))) {
         ...{ onClick: (...[$event]) => {
                 __VLS_ctx.editorStore.switchTab(tab.id);
                 // @ts-ignore
-                [isReady, editorStore, editorStore,];
+                [isReady, layoutStore, editorStore, editorStore,];
             } },
         key: (tab.id),
         ...{ class: "tab" },
@@ -203,20 +213,36 @@ __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
 });
 /** @type {__VLS_StyleScopedClasses['note-container']} */ ;
 if (__VLS_ctx.isReady && __VLS_ctx.editorStore.currentDocument) {
-    const __VLS_25 = NoteOutline;
+    const __VLS_25 = FormatToolbar;
     // @ts-ignore
-    const __VLS_26 = __VLS_asFunctionalComponent1(__VLS_25, new __VLS_25({}));
-    const __VLS_27 = __VLS_26({}, ...__VLS_functionalComponentArgsRest(__VLS_26));
+    const __VLS_26 = __VLS_asFunctionalComponent1(__VLS_25, new __VLS_25({
+        muyaInstance: (__VLS_ctx.muyaInstance),
+    }));
+    const __VLS_27 = __VLS_26({
+        muyaInstance: (__VLS_ctx.muyaInstance),
+    }, ...__VLS_functionalComponentArgsRest(__VLS_26));
+}
+if (__VLS_ctx.isReady && __VLS_ctx.editorStore.currentDocument) {
+    const __VLS_30 = NoteOutline;
+    // @ts-ignore
+    const __VLS_31 = __VLS_asFunctionalComponent1(__VLS_30, new __VLS_30({}));
+    const __VLS_32 = __VLS_31({}, ...__VLS_functionalComponentArgsRest(__VLS_31));
 }
 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
     ...{ class: "note-content" },
 });
 /** @type {__VLS_StyleScopedClasses['note-content']} */ ;
 if (__VLS_ctx.isReady && __VLS_ctx.editorStore.currentDocument) {
-    const __VLS_30 = EditorArea;
+    const __VLS_35 = EditorArea;
     // @ts-ignore
-    const __VLS_31 = __VLS_asFunctionalComponent1(__VLS_30, new __VLS_30({}));
-    const __VLS_32 = __VLS_31({}, ...__VLS_functionalComponentArgsRest(__VLS_31));
+    const __VLS_36 = __VLS_asFunctionalComponent1(__VLS_35, new __VLS_35({
+        ref: "editorAreaRef",
+    }));
+    const __VLS_37 = __VLS_36({
+        ref: "editorAreaRef",
+    }, ...__VLS_functionalComponentArgsRest(__VLS_36));
+    var __VLS_40 = {};
+    var __VLS_38;
 }
 else if (!__VLS_ctx.isReady) {
     __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
@@ -229,7 +255,33 @@ else if (!__VLS_ctx.isReady) {
     /** @type {__VLS_StyleScopedClasses['loading-spinner']} */ ;
     __VLS_asFunctionalElement1(__VLS_intrinsics.p, __VLS_intrinsics.p)({});
 }
+let __VLS_42;
+/** @ts-ignore @type {typeof __VLS_components.Transition | typeof __VLS_components.Transition} */
+Transition;
 // @ts-ignore
-[isReady, isReady, isReady, isReady, editorStore, editorStore, editorStore, createNewDocument, lastUpdated, isSaved, isSaved, wordCount,];
+const __VLS_43 = __VLS_asFunctionalComponent1(__VLS_42, new __VLS_42({
+    name: "slide-right",
+}));
+const __VLS_44 = __VLS_43({
+    name: "slide-right",
+}, ...__VLS_functionalComponentArgsRest(__VLS_43));
+const { default: __VLS_47 } = __VLS_45.slots;
+if (__VLS_ctx.layoutStore.rightPanelVisible && __VLS_ctx.editorStore.currentDocument) {
+    const __VLS_48 = AISidebar;
+    // @ts-ignore
+    const __VLS_49 = __VLS_asFunctionalComponent1(__VLS_48, new __VLS_48({
+        noteContext: ({ id: __VLS_ctx.editorStore.currentDocument.id, title: __VLS_ctx.editorStore.currentDocument.title }),
+    }));
+    const __VLS_50 = __VLS_49({
+        noteContext: ({ id: __VLS_ctx.editorStore.currentDocument.id, title: __VLS_ctx.editorStore.currentDocument.title }),
+    }, ...__VLS_functionalComponentArgsRest(__VLS_49));
+}
+// @ts-ignore
+[isReady, isReady, isReady, isReady, isReady, layoutStore, editorStore, editorStore, editorStore, editorStore, editorStore, editorStore, editorStore, createNewDocument, lastUpdated, isSaved, isSaved, wordCount, muyaInstance,];
+var __VLS_45;
+// @ts-ignore
+var __VLS_41 = __VLS_40;
+// @ts-ignore
+[];
 const __VLS_export = (await import('vue')).defineComponent({});
 export default {};

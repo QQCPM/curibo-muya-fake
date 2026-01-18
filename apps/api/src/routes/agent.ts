@@ -67,7 +67,7 @@ const PlannerSchema = z.object({
   goal: z.string().min(1).max(2000),
   context: z.string().optional(),
   constraints: z.array(z.string()).optional(),
-  maxSteps: z.number().int().min(1).max(20).optional(),
+  maxSteps: z.number().int().min(1).max(20).default(10),
   stream: z.boolean().default(true),
 })
 
@@ -96,7 +96,7 @@ agent.post(
 
     const agent = new SecretaryAgent({
       supabase: auth.supabase,
-      userId: auth.user.id,
+      userId: auth.userId,
       openaiApiKey,
     })
 
@@ -161,7 +161,7 @@ agent.post(
 
     const chatAgent = new ChatAgent({
       supabase: auth.supabase,
-      userId: auth.user.id,
+      userId: auth.userId,
       openaiApiKey,
     })
 
@@ -177,6 +177,7 @@ agent.post(
             message: body.input,
             context: body.context,
             includeRag: true,
+            maxChunks: 5,
           })
 
           for await (const chunk of generator) {
@@ -196,6 +197,7 @@ agent.post(
       message: body.input,
       context: body.context,
       includeRag: true,
+      maxChunks: 5,
     })
 
     return c.json(result)
@@ -226,7 +228,7 @@ agent.post(
 
     const noteAgent = new NoteAgent({
       supabase: auth.supabase,
-      userId: auth.user.id,
+      userId: auth.userId,
       openaiApiKey,
     })
 
@@ -288,7 +290,7 @@ agent.post(
 
     const plannerAgent = new PlannerAgent({
       supabase: auth.supabase,
-      userId: auth.user.id,
+      userId: auth.userId,
       openaiApiKey,
     })
 
@@ -350,7 +352,7 @@ agent.post(
 
     const plannerAgent = new PlannerAgent({
       supabase: auth.supabase,
-      userId: auth.user.id,
+      userId: auth.userId,
       openaiApiKey,
     })
 

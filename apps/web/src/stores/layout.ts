@@ -25,7 +25,7 @@ export const useLayoutStore = defineStore('layout', () => {
 
   // Right panel (for AI, etc.)
   const rightPanelVisible = ref(false)
-  const rightPanelWidth = ref(350)
+  const rightPanelWidth = ref(320)
 
   // Fullscreen mode
   const isFullscreen = ref(false)

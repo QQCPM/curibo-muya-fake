@@ -21,9 +21,10 @@
   },
   "include": [
     "src/**/*"
-, "src/test-tools.ts"  ],
+  ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "**/*.test.ts"
   ]
 }

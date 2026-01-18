@@ -153,7 +153,7 @@ onMounted(async () => {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background: var(--app-bg, #F8FAFC);
+  background: var(--app-bg);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   overflow: hidden;
 }
@@ -166,6 +166,7 @@ onMounted(async () => {
   min-width: 0;
   padding: 16px;
   gap: 12px;
+  background: var(--app-bg);
 }
 
 /* Tabs Bar */
@@ -207,9 +208,9 @@ onMounted(async () => {
   gap: 6px;
   padding: 8px 12px;
   border-radius: 8px;
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
-  color: var(--text-color-secondary, #64748B);
+  color: var(--text-color-secondary);
   font-size: 13px;
   font-weight: 400;
   cursor: pointer;
@@ -220,15 +221,17 @@ onMounted(async () => {
   overflow: hidden;
 }
 
-.tab:hover {
-  background: rgba(255, 255, 255, 0.5);
+.tab:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(124, 158, 248, 0.1);
 }
 
 .tab.active {
-  background: var(--card-bg, #FFFFFF);
-  color: var(--primary-color, #7C9EF8);
+  background: var(--card-bg);
+  color: var(--primary-color);
   font-weight: 500;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(124, 158, 248, 0.08);
 }
 
 .tab-icon {
@@ -279,22 +282,22 @@ onMounted(async () => {
   border-radius: 6px;
   border: none;
   background: transparent;
-  color: var(--text-color-secondary, #94A3B8);
+  color: var(--text-color-secondary);
   cursor: pointer;
   transition: all 0.15s;
 }
 
 .new-tab-btn:hover {
-  background: rgba(255, 255, 255, 0.5);
-  color: var(--text-color, #334155);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
 }
 
 /* Note Container - Elevated Card */
 .note-container {
   flex: 1;
-  background: var(--editorBgColor, var(--card-bg, #FFFFFF));
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.02);
+  background: var(--editorBgColor, var(--card-bg));
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(124, 158, 248, 0.08);
   display: flex;
   flex-direction: column;
   position: relative;

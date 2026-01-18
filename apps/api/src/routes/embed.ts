@@ -37,18 +37,44 @@ embed.post(
   async (c) => {
     const auth = requireAuth(c)
     const body = c.req.valid('json')
+    const openaiApiKey = process.env.OPENAI_API_KEY
 
-    // TODO: Phase 1 - Use OpenAI to generate embedding
-    // For now, return placeholder
+    if (!openaiApiKey) {
+      return c.json({ error: 'OpenAI API key not configured' }, 500)
+    }
 
-    return c.json({
-      text: body.text.substring(0, 100) + '...',
-      embedding: null, // Will be number[] in Phase 1
-      dimensions: 1536,
-      model: 'text-embedding-3-large',
-      tokenCount: Math.ceil(body.text.length / 4), // Approximate
-      message: 'Embedding generation will be implemented in Phase 1',
-    })
+    try {
+      const { createEmbeddingService, countTokens } = await import('@inkdown/ai/services')
+
+      const service = createEmbeddingService({
+        supabase: auth.supabase,
+        userId: auth.userId,
+        openaiApiKey,
+      })
+
+      const embedding = await service.generateEmbedding(body.text)
+      const tokenCount = await countTokens(body.text)
+
+      // Track usage
+      await auth.supabase.from('ai_usage').insert({
+        user_id: auth.userId,
+        provider: 'openai',
+        model: 'text-embedding-3-large',
+        action_type: 'embed',
+        input_tokens: tokenCount,
+        output_tokens: 0,
+        cost_cents: tokenCount * 0.00013, // $0.13 per 1M tokens
+      })
+
+      return c.json({
+        embedding,
+        dimensions: 1536,
+        model: 'text-embedding-3-large',
+        tokenCount,
+      })
+    } catch (err) {
+      return c.json({ error: String(err) }, 500)
+    }
   }
 )
 

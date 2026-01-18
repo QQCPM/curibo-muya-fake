@@ -8,17 +8,38 @@
 :root[data-theme="dark"],
 :root[data-theme="one-dark"],
 :root[data-theme="material-dark"] {
-  /* New design colors */
-  --app-bg: #1a1a1e;
-  --card-bg: #242428;
-  --sidebar-bg: #1e1e22;
-  --bg-color: #252525;
-  --primary-color: #7C9EF8;
-  --primary-gradient: linear-gradient(135deg, #7C9EF8 0%, #A78BFA 100%);
+  /* Premium Dark Base Colors - Deeper blacks */
+  --app-bg: #0F1419;
+  --card-bg: #1C2128;
+  --sidebar-bg: #161B22;
+  --bg-color: #0F1419;
+
+  /* Blue-Green Color Palette */
+  --premium-blue: #7C9EF8;
+  --premium-teal: #14B8A6;
+  --premium-emerald: #10B981;
+
+  /* Primary color and gradients */
+  --primary-color: #10B981;
+  --primary-solid: #10B981;
+  --primary-gradient: linear-gradient(135deg, #7C9EF8 0%, #14B8A6 50%, #10B981 100%);
+  --primary-gradient-hover: linear-gradient(135deg, #6B8FE8 0%, #0FA89A 50%, #0FA871 100%);
+
+  /* Premium Dark Borders & Shadows */
   --hover-bg: rgba(255, 255, 255, 0.06);
   --text-color: #E2E8F0;
   --text-color-secondary: #94A3B8;
-  --border-color: #333338;
+  --border-color: rgba(124, 158, 248, 0.12);
+  --premium-glow: rgba(124, 158, 248, 0.15);
+  --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(124, 158, 248, 0.08);
+
+  /* AI Sidebar gradient overlay (subtle blue tint, 25% opacity) */
+  --ai-gradient-overlay: linear-gradient(180deg,
+    rgba(79, 70, 229, 0.25) 0%,
+    rgba(59, 130, 246, 0.2) 15%,
+    rgba(6, 182, 212, 0.15) 30%,
+    transparent 60%
+  );
   
   /* Theme colors */
   --themeColor: #7C9EF8;
@@ -64,11 +85,11 @@
   --floatShadow: rgba(0, 0, 0, 0.2);
   --tableBorderColor: #363839;
 
-  /* Glassmorphism - Dark */
-  --glass-bg: rgba(30, 30, 35, 0.75);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: rgba(0, 0, 0, 0.3);
-  --glass-shadow-hover: rgba(0, 0, 0, 0.4);
+  /* Glassmorphism - Premium Dark */
+  --glass-bg: rgba(15, 20, 25, 0.85);
+  --glass-border: rgba(124, 158, 248, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(124, 158, 248, 0.1);
+  --glass-shadow-hover: rgba(0, 0, 0, 0.5);
   --glass-inset: rgba(255, 255, 255, 0.05);
   --glass-btn-color: rgba(255, 255, 255, 0.6);
   --glass-btn-color-hover: rgba(255, 255, 255, 0.95);
@@ -76,22 +97,22 @@
   --glass-btn-bg-active: rgba(255, 255, 255, 0.12);
   --glass-divider: rgba(255, 255, 255, 0.1);
 
-  /* AI Sidebar - Dark */
-  --ai-sidebar-bg: #161b22;
-  --ai-header-bg: rgba(22, 27, 34, 0.85);
+  /* AI Sidebar - Premium Dark */
+  --ai-sidebar-bg: #161B22;
+  --ai-header-bg: rgba(22, 27, 34, 0.9);
   --ai-tab-color: #8b949e;
   --ai-tab-active: #e6edf3;
-  --ai-card-bg: #21262d;
-  --ai-card-border: #30363d;
-  --ai-card-shadow: none;
-  --ai-input-bg: #21262d;
-  --ai-input-border: #30363d;
-  --ai-input-focus: rgba(124, 158, 248, 0.3);
-  --ai-cmd-header: #a371f7;
-  --ai-cmd-bg: #30363d;
+  --ai-card-bg: #1C2128;
+  --ai-card-border: rgba(124, 158, 248, 0.12);
+  --ai-card-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(124, 158, 248, 0.08);
+  --ai-input-bg: #1C2128;
+  --ai-input-border: rgba(124, 158, 248, 0.12);
+  --ai-input-focus: rgba(16, 185, 129, 0.3);
+  --ai-cmd-header: #10B981;
+  --ai-cmd-bg: rgba(16, 185, 129, 0.1);
   --ai-send-bg: #30363d;
-  --ai-send-active-bg: #e6edf3;
-  --ai-send-active-color: #161b22;
+  --ai-send-active-bg: linear-gradient(135deg, #7C9EF8 0%, #14B8A6 50%, #10B981 100%);
+  --ai-send-active-color: #ffffff;
   --ai-scrollbar-thumb: #30363d;
 }
 

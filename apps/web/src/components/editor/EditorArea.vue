@@ -1,33 +1,22 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, computed, nextTick } from 'vue'
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useEditorStore, usePreferencesStore, useAuthStore } from '@/stores'
 import * as attachmentsService from '@/services/attachments.service'
 
-// Import Muya and plugins
-import Muya from '@/muya/lib'
-import TablePicker from '@/muya/lib/ui/tablePicker'
-import QuickInsert from '@/muya/lib/ui/quickInsert'
-import CodePicker from '@/muya/lib/ui/codePicker'
-import EmojiPicker from '@/muya/lib/ui/emojiPicker'
-import ImagePathPicker from '@/muya/lib/ui/imagePicker'
-import ImageSelector from '@/muya/lib/ui/imageSelector'
-import ImageToolbar from '@/muya/lib/ui/imageToolbar'
-import Transformer from '@/muya/lib/ui/transformer'
-import FormatPicker from '@/muya/lib/ui/formatPicker'
-import LinkTools from '@/muya/lib/ui/linkTools'
-import FootnoteTool from '@/muya/lib/ui/footnoteTool'
-import TableBarTools from '@/muya/lib/ui/tableTools'
-import FrontMenu from '@/muya/lib/ui/frontMenu'
+// Import MuyaEditor from @inkdown/editor (TypeScript wrapper)
+import { MuyaEditor, type EditorChangeEvent } from '@inkdown/editor'
 
-// Import Muya styles
-import '@/muya/lib/assets/styles/index.css'
-import '@/muya/themes/default.css'
+// Import Muya styles from @muyajs/core
+import '@muyajs/core/lib/core.css'
 
 // Import KaTeX CSS for math rendering
 import 'katex/dist/katex.min.css'
 
 // Import Prism CSS for code syntax highlighting
 import 'prismjs/themes/prism.css'
+
+// Import custom Muya style overrides
+import '@/assets/styles/muya-overrides.css'
 
 // Platform utilities
 import { openExternal } from '@/utils/platform'
@@ -37,7 +26,7 @@ const preferencesStore = usePreferencesStore()
 const authStore = useAuthStore()
 
 const editorRef = ref<HTMLElement>()
-let muyaInstance: any = null
+let editor: MuyaEditor | null = null
 const autoSaveTimer = ref<ReturnType<typeof setTimeout>>()
 const isEditorReady = ref(false)
 const isUploadingImage = ref(false)
@@ -81,53 +70,20 @@ async function handleImageUpload(file: File): Promise<string> {
   }
 }
 
-// Register Muya plugins once
-let pluginsRegistered = false
-function registerPlugins() {
-  if (pluginsRegistered) return
-  
-  Muya.use(TablePicker)
-  Muya.use(QuickInsert)
-  Muya.use(CodePicker)
-  Muya.use(EmojiPicker)
-  Muya.use(ImagePathPicker)
-  Muya.use(ImageSelector, {
-    unsplashAccessKey: import.meta.env.VITE_UNSPLASH_ACCESS_KEY || '',
-    // Image upload handler for paste/drop
-    imageAction: async (file: File) => {
-      return await handleImageUpload(file)
-    }
-  })
-  Muya.use(Transformer)
-  Muya.use(ImageToolbar)
-  Muya.use(FormatPicker)
-  Muya.use(FrontMenu)
-  Muya.use(LinkTools, {
-    jumpClick: (linkInfo: { href: string }) => {
-      openExternal(linkInfo.href)
-    }
-  })
-  Muya.use(FootnoteTool)
-  Muya.use(TableBarTools)
-  
-  pluginsRegistered = true
-}
-
-// Initialize Muya editor
-function initializeMuya() {
+// Initialize the MuyaEditor
+async function initializeEditor() {
   if (!editorRef.value) return
 
-  registerPlugins()
-
-  const options = {
+  // Create the editor instance with options
+  editor = new MuyaEditor(editorRef.value, {
     markdown: editorStore.currentDocument?.content || '',
     focusMode: preferencesStore.focus,
     preferLooseListItem: preferencesStore.preferLooseListItem,
     autoPairBracket: preferencesStore.autoPairBracket,
     autoPairMarkdownSyntax: preferencesStore.autoPairMarkdownSyntax,
     autoPairQuote: preferencesStore.autoPairQuote,
-    bulletListMarker: preferencesStore.bulletListMarker,
-    orderListDelimiter: preferencesStore.orderListDelimiter,
+    bulletListMarker: preferencesStore.bulletListMarker as '-' | '*' | '+',
+    orderListDelimiter: preferencesStore.orderListDelimiter as '.' | ')',
     tabSize: preferencesStore.tabSize,
     fontSize: preferencesStore.fontSize,
     lineHeight: preferencesStore.lineHeight,
@@ -135,20 +91,23 @@ function initializeMuya() {
     listIndentation: preferencesStore.listIndentation,
     hideQuickInsertHint: preferencesStore.hideQuickInsertHint,
     hideLinkPopup: preferencesStore.hideLinkPopup,
-    spellcheckEnabled: false, // Web doesn't have native spellcheck integration
+    spellcheckEnabled: false,
     trimUnnecessaryCodeBlockEmptyLines: preferencesStore.trimUnnecessaryCodeBlockEmptyLines,
-    // Theme for diagrams
     mermaidTheme: preferencesStore.theme.includes('dark') ? 'dark' : 'default',
     vegaTheme: preferencesStore.theme.includes('dark') ? 'dark' : 'latimes',
-    sequenceTheme: preferencesStore.sequenceTheme,
-    // Enable math and extended markdown features
-    superSubScript: true,  // Enable superscript/subscript syntax
-    footnote: true,        // Enable footnote syntax
-    isGitlabCompatibilityEnabled: true,  // Enable GitLab-flavored markdown
-    disableHtml: false     // Allow HTML for math rendering
-  }
+    superSubScript: true,
+    footnote: true,
+    math: true,
+    isGitlabCompatibilityEnabled: true,
+    disableHtml: false,
+  })
 
-  muyaInstance = new Muya(editorRef.value, options)
+  // Initialize with plugin configuration
+  await editor.init({
+    imageAction: handleImageUpload,
+    unsplashAccessKey: import.meta.env.VITE_UNSPLASH_ACCESS_KEY || '',
+    linkJumpClick: (linkInfo) => openExternal(linkInfo.href),
+  })
 
   // Restore editor state (cursor and scroll position) after initialization
   const currentDoc = editorStore.currentDocument
@@ -156,13 +115,13 @@ function initializeMuya() {
     nextTick(() => {
       try {
         // Restore cursor position
-        if (currentDoc.editor_state?.cursor && muyaInstance) {
-          muyaInstance.setCursor(currentDoc.editor_state.cursor)
+        if (currentDoc.editor_state?.cursor && editor) {
+          editor.setCursor(currentDoc.editor_state.cursor)
         }
 
         // Restore scroll position
-        if (currentDoc.editor_state?.scroll && muyaInstance) {
-          const container = muyaInstance.container
+        if (currentDoc.editor_state?.scroll && editor) {
+          const container = editor.container
           if (container) {
             container.scrollTop = currentDoc.editor_state.scroll.top || 0
             container.scrollLeft = currentDoc.editor_state.scroll.left || 0
@@ -174,16 +133,12 @@ function initializeMuya() {
     })
   }
 
-  // Handle content changes
-  muyaInstance.on('change', (changes: any) => {
-    const { markdown, wordCount: wc, cursor, toc } = changes
-    
+  // Handle content changes (typed event!)
+  editor.on('change', (changes: EditorChangeEvent) => {
+    const { markdown, wordCount, cursor, toc } = changes
+
     // Update store
-    editorStore.updateContent(markdown, {
-      words: wc?.word || 0,
-      characters: wc?.character || 0,
-      paragraphs: wc?.paragraph || 0
-    })
+    editorStore.updateContent(markdown, wordCount)
 
     if (cursor) {
       editorStore.updateCursor(cursor)
@@ -197,7 +152,7 @@ function initializeMuya() {
     if (autoSaveTimer.value) {
       clearTimeout(autoSaveTimer.value)
     }
-    
+
     if (preferencesStore.autoSave) {
       autoSaveTimer.value = setTimeout(() => {
         editorStore.saveDocument()
@@ -206,17 +161,17 @@ function initializeMuya() {
   })
 
   // Handle link clicks
-  muyaInstance.on('format-click', ({ event, formatType, data }: any) => {
-    const ctrlOrMeta = (navigator.platform.includes('Mac') && event.metaKey) || 
+  editor.on('format-click', ({ event, formatType, data }) => {
+    const ctrlOrMeta = (navigator.platform.includes('Mac') && event.metaKey) ||
                        (!navigator.platform.includes('Mac') && event.ctrlKey)
-    
+
     if (formatType === 'link' && ctrlOrMeta && data?.href) {
       openExternal(data.href)
     }
   })
 
   // Handle selection changes
-  muyaInstance.on('selectionChange', (changes: any) => {
+  editor.on('selectionChange', () => {
     // Could dispatch to store for toolbar state
   })
 
@@ -227,33 +182,33 @@ function initializeMuya() {
 watch(
   () => editorStore.currentDocument,
   (newDoc, oldDoc) => {
-    if (newDoc && muyaInstance && newDoc.id !== oldDoc?.id) {
+    if (newDoc && editor && newDoc.id !== oldDoc?.id) {
       // Switch to new document content, restoring cursor position if available
-      muyaInstance.setMarkdown(newDoc.content, newDoc.editor_state?.cursor)
+      editor.setMarkdown(newDoc.content, newDoc.editor_state?.cursor)
     }
   }
 )
 
 // Watch for preference changes
 watch(() => preferencesStore.focus, (value) => {
-  muyaInstance?.setFocusMode(value)
+  editor?.setFocusMode(value)
 })
 
 watch(() => preferencesStore.fontSize, (value) => {
-  muyaInstance?.setFont({ fontSize: value })
+  editor?.setFont({ fontSize: value })
 })
 
 watch(() => preferencesStore.lineHeight, (value) => {
-  muyaInstance?.setFont({ lineHeight: value })
+  editor?.setFont({ lineHeight: value })
 })
 
 watch(() => preferencesStore.tabSize, (value) => {
-  muyaInstance?.setTabSize(value)
+  editor?.setTabSize(value)
 })
 
 watch(() => preferencesStore.theme, (value) => {
   const isDark = value.includes('dark')
-  muyaInstance?.setOptions({
+  editor?.setOptions({
     mermaidTheme: isDark ? 'dark' : 'default',
     vegaTheme: isDark ? 'dark' : 'latimes'
   }, true)
@@ -266,44 +221,44 @@ function handleKeydown(event: KeyboardEvent) {
     event.preventDefault()
     editorStore.saveDocument()
   }
-  
+
   // Undo: Cmd/Ctrl + Z
   if ((event.metaKey || event.ctrlKey) && event.key === 'z' && !event.shiftKey) {
     event.preventDefault()
-    muyaInstance?.undo()
+    editor?.undo()
   }
-  
+
   // Redo: Cmd/Ctrl + Shift + Z or Cmd/Ctrl + Y
   if ((event.metaKey || event.ctrlKey) && (event.key === 'y' || (event.key === 'z' && event.shiftKey))) {
     event.preventDefault()
-    muyaInstance?.redo()
+    editor?.redo()
   }
 }
 
 onMounted(() => {
-  initializeMuya()
+  initializeEditor()
   window.addEventListener('keydown', handleKeydown)
 })
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeydown)
-  
+
   if (autoSaveTimer.value) {
     clearTimeout(autoSaveTimer.value)
   }
-  
-  if (muyaInstance) {
+
+  if (editor) {
     try {
-      muyaInstance.destroy()
+      editor.destroy()
     } catch (e) {
       // Ignore cleanup errors
     }
-    muyaInstance = null
+    editor = null
   }
 })
 
-// Expose Muya instance for parent components (e.g., format toolbar)
-const getMuya = () => muyaInstance
+// Expose editor instance for parent components (e.g., format toolbar)
+const getMuya = () => editor
 defineExpose({ getMuya, isEditorReady, isUploadingImage })
 </script>
 

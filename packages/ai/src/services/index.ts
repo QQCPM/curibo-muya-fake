@@ -2,13 +2,44 @@
  * AI Services exports
  *
  * This module provides services for embedding, RAG, and chunking.
- * Full implementations will be added in Phase 1-2.
  */
 
-// Services (to be implemented)
-// export { EmbeddingService } from './embedding'
-// export { RAGService } from './rag'
-// export { ChunkingService } from './chunking'
+// Embedding and RAG Service
+export {
+  EmbeddingService,
+  createEmbeddingService,
+  EMBEDDING_MODEL,
+  EMBEDDING_DIMENSIONS,
+  type EmbeddingServiceConfig,
+  type RAGChunk,
+  type RAGOptions,
+} from './embedding'
+
+// Chunking Service
+export {
+  ChunkingService,
+  createChunkingService,
+  countTokens,
+  chunkText,
+  type ChunkingOptions,
+  type TextChunk,
+} from './chunking'
+
+// Recommendation Service
+export {
+  RecommendationService,
+  createRecommendationService,
+  type Mindmap,
+  type MindmapNode,
+  type MindmapEdge,
+  type Flashcard,
+  type FlashcardDeck,
+  type Concept,
+  type ConceptTree,
+  type Exercise,
+  type ExerciseSet,
+  type RecommendationServiceConfig,
+} from './recommendations'
 
 /**
  * Embedding result from the embedding service
@@ -20,28 +51,10 @@ export interface EmbeddingResult {
   dimensions: number
 }
 
-/**
- * Text chunk for embedding
- */
-export interface TextChunk {
-  index: number
-  text: string
-  startPosition: number
-  endPosition: number
-  tokenCount?: number
-}
+// TextChunk and ChunkingOptions are now exported from './chunking'
 
 /**
- * Chunking options
- */
-export interface ChunkingOptions {
-  maxTokens?: number
-  overlap?: number
-  splitOnSentences?: boolean
-}
-
-/**
- * RAG retrieval result
+ * RAG retrieval result (legacy, use RAGChunk from embedding.ts)
  */
 export interface RAGResult {
   noteId: string
@@ -51,29 +64,23 @@ export interface RAGResult {
   metadata?: Record<string, unknown>
 }
 
-/**
- * RAG retrieval options
- */
-export interface RAGOptions {
-  limit?: number
-  threshold?: number
-  projectId?: string
-  noteIds?: string[]
-}
+// RAGOptions is now exported from './embedding'
 
 /**
  * Default chunking configuration
  */
-export const DEFAULT_CHUNKING_OPTIONS: Required<ChunkingOptions> = {
+import type { ChunkingOptions as ChunkingOptionsType } from './chunking'
+export const DEFAULT_CHUNKING_OPTIONS: Required<ChunkingOptionsType> = {
   maxTokens: 500,
   overlap: 50,
-  splitOnSentences: true,
+  preserveCodeBlocks: true,
 }
 
 /**
  * Default RAG configuration
  */
-export const DEFAULT_RAG_OPTIONS: Required<RAGOptions> = {
+import type { RAGOptions as RAGOptionsType } from './embedding'
+export const DEFAULT_RAG_OPTIONS: Required<RAGOptionsType> = {
   limit: 5,
   threshold: 0.7,
   projectId: undefined as unknown as string,

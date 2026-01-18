@@ -15,7 +15,7 @@ import { ref, computed } from 'vue'
 export interface ChatSession {
     id: string
     title: string
-    agentType: 'chat' | 'note' | 'planner' | 'course' | 'slides' | 'research' | null
+    agentType: 'chat' | 'note' | 'planner' | 'course' | 'slides' | 'research' | 'secretary' | null
     contextNoteIds: string[]
     contextProjectId: string | null
     messages: ChatMessage[]

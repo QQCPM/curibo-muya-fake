@@ -1,6 +1,7 @@
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 import { FileText, List, Plus, ChevronRight, Trash2, Folder, FolderOpen, ChevronRight as ChevronRightIcon, MoreHorizontal, Edit2, FolderPlus, FilePlus, Search, Settings, LogOut, Moon, Sun, Monitor, User, MessageCircle, ChevronUp, CornerDownRight } from 'lucide-vue-next';
 import { useEditorStore, useLayoutStore, useProjectStore, useAuthStore, usePreferencesStore } from '@/stores';
+import NavigationDock from '@/components/ui/NavigationDock.vue';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { useRouter } from 'vue-router';
 import TableOfContents from './TableOfContents.vue';
@@ -489,14 +490,15 @@ let __VLS_directives;
 /** @type {__VLS_StyleScopedClasses['quick-action-btn']} */ ;
 /** @type {__VLS_StyleScopedClasses['quick-action-btn']} */ ;
 /** @type {__VLS_StyleScopedClasses['primary']} */ ;
+/** @type {__VLS_StyleScopedClasses['inline-search']} */ ;
+/** @type {__VLS_StyleScopedClasses['inline-search']} */ ;
+/** @type {__VLS_StyleScopedClasses['inline-search']} */ ;
+/** @type {__VLS_StyleScopedClasses['inline-search']} */ ;
 /** @type {__VLS_StyleScopedClasses['action-btn']} */ ;
 /** @type {__VLS_StyleScopedClasses['action-btn']} */ ;
 /** @type {__VLS_StyleScopedClasses['primary']} */ ;
 /** @type {__VLS_StyleScopedClasses['action-btn']} */ ;
 /** @type {__VLS_StyleScopedClasses['primary']} */ ;
-/** @type {__VLS_StyleScopedClasses['panel-search']} */ ;
-/** @type {__VLS_StyleScopedClasses['panel-search']} */ ;
-/** @type {__VLS_StyleScopedClasses['panel-search']} */ ;
 /** @type {__VLS_StyleScopedClasses['tree-item']} */ ;
 /** @type {__VLS_StyleScopedClasses['tree-item']} */ ;
 /** @type {__VLS_StyleScopedClasses['tree-item']} */ ;
@@ -612,6 +614,10 @@ else {
         ...{ class: "sidebar-expanded" },
     });
     /** @type {__VLS_StyleScopedClasses['sidebar-expanded']} */ ;
+    const __VLS_10 = NavigationDock;
+    // @ts-ignore
+    const __VLS_11 = __VLS_asFunctionalComponent1(__VLS_10, new __VLS_10({}));
+    const __VLS_12 = __VLS_11({}, ...__VLS_functionalComponentArgsRest(__VLS_11));
     __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
         ...{ class: "quick-actions" },
     });
@@ -629,16 +635,16 @@ else {
     });
     /** @type {__VLS_StyleScopedClasses['quick-action-btn']} */ ;
     /** @type {__VLS_StyleScopedClasses['primary']} */ ;
-    let __VLS_10;
+    let __VLS_15;
     /** @ts-ignore @type {typeof __VLS_components.FilePlus} */
     FilePlus;
     // @ts-ignore
-    const __VLS_11 = __VLS_asFunctionalComponent1(__VLS_10, new __VLS_10({
-        size: (18),
+    const __VLS_16 = __VLS_asFunctionalComponent1(__VLS_15, new __VLS_15({
+        size: (14),
     }));
-    const __VLS_12 = __VLS_11({
-        size: (18),
-    }, ...__VLS_functionalComponentArgsRest(__VLS_11));
+    const __VLS_17 = __VLS_16({
+        size: (14),
+    }, ...__VLS_functionalComponentArgsRest(__VLS_16));
     __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
         ...{ onClick: (...[$event]) => {
                 if (!!(!__VLS_ctx.sidebarVisible))
@@ -651,43 +657,43 @@ else {
         title: "New Project",
     });
     /** @type {__VLS_StyleScopedClasses['quick-action-btn']} */ ;
-    let __VLS_15;
+    let __VLS_20;
     /** @ts-ignore @type {typeof __VLS_components.FolderPlus} */
     FolderPlus;
     // @ts-ignore
-    const __VLS_16 = __VLS_asFunctionalComponent1(__VLS_15, new __VLS_15({
-        size: (18),
-    }));
-    const __VLS_17 = __VLS_16({
-        size: (18),
-    }, ...__VLS_functionalComponentArgsRest(__VLS_16));
-    __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-        ...{ class: "panel documents-panel" },
-    });
-    /** @type {__VLS_StyleScopedClasses['panel']} */ ;
-    /** @type {__VLS_StyleScopedClasses['documents-panel']} */ ;
-    __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
-        ...{ class: "panel-search" },
-    });
-    /** @type {__VLS_StyleScopedClasses['panel-search']} */ ;
-    let __VLS_20;
-    /** @ts-ignore @type {typeof __VLS_components.Search} */
-    Search;
-    // @ts-ignore
     const __VLS_21 = __VLS_asFunctionalComponent1(__VLS_20, new __VLS_20({
         size: (14),
-        ...{ class: "search-icon" },
     }));
     const __VLS_22 = __VLS_21({
         size: (14),
-        ...{ class: "search-icon" },
     }, ...__VLS_functionalComponentArgsRest(__VLS_21));
+    __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+        ...{ class: "inline-search" },
+    });
+    /** @type {__VLS_StyleScopedClasses['inline-search']} */ ;
+    let __VLS_25;
+    /** @ts-ignore @type {typeof __VLS_components.Search} */
+    Search;
+    // @ts-ignore
+    const __VLS_26 = __VLS_asFunctionalComponent1(__VLS_25, new __VLS_25({
+        size: (12),
+        ...{ class: "search-icon" },
+    }));
+    const __VLS_27 = __VLS_26({
+        size: (12),
+        ...{ class: "search-icon" },
+    }, ...__VLS_functionalComponentArgsRest(__VLS_26));
     /** @type {__VLS_StyleScopedClasses['search-icon']} */ ;
     __VLS_asFunctionalElement1(__VLS_intrinsics.input)({
         value: (__VLS_ctx.searchQuery),
         type: "text",
         placeholder: "Search...",
     });
+    __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
+        ...{ class: "panel documents-panel" },
+    });
+    /** @type {__VLS_StyleScopedClasses['panel']} */ ;
+    /** @type {__VLS_StyleScopedClasses['documents-panel']} */ ;
     __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
         ...{ class: "tree-view" },
     });
@@ -750,29 +756,29 @@ else {
             ...{ class: "expand-btn" },
         });
         /** @type {__VLS_StyleScopedClasses['expand-btn']} */ ;
-        let __VLS_25;
+        let __VLS_30;
         /** @ts-ignore @type {typeof __VLS_components.ChevronRightIcon} */
         ChevronRightIcon;
         // @ts-ignore
-        const __VLS_26 = __VLS_asFunctionalComponent1(__VLS_25, new __VLS_25({
-            size: (14),
-            ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(project.id) }) },
-        }));
-        const __VLS_27 = __VLS_26({
-            size: (14),
-            ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(project.id) }) },
-        }, ...__VLS_functionalComponentArgsRest(__VLS_26));
-        /** @type {__VLS_StyleScopedClasses['rotated']} */ ;
-        const __VLS_30 = (__VLS_ctx.isProjectExpanded(project.id) ? __VLS_ctx.FolderOpen : __VLS_ctx.Folder);
-        // @ts-ignore
         const __VLS_31 = __VLS_asFunctionalComponent1(__VLS_30, new __VLS_30({
-            size: (16),
-            ...{ class: "item-icon folder-icon" },
+            size: (14),
+            ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(project.id) }) },
         }));
         const __VLS_32 = __VLS_31({
+            size: (14),
+            ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(project.id) }) },
+        }, ...__VLS_functionalComponentArgsRest(__VLS_31));
+        /** @type {__VLS_StyleScopedClasses['rotated']} */ ;
+        const __VLS_35 = (__VLS_ctx.isProjectExpanded(project.id) ? __VLS_ctx.FolderOpen : __VLS_ctx.Folder);
+        // @ts-ignore
+        const __VLS_36 = __VLS_asFunctionalComponent1(__VLS_35, new __VLS_35({
             size: (16),
             ...{ class: "item-icon folder-icon" },
-        }, ...__VLS_functionalComponentArgsRest(__VLS_31));
+        }));
+        const __VLS_37 = __VLS_36({
+            size: (16),
+            ...{ class: "item-icon folder-icon" },
+        }, ...__VLS_functionalComponentArgsRest(__VLS_36));
         /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
         /** @type {__VLS_StyleScopedClasses['folder-icon']} */ ;
         if (__VLS_ctx.editingProjectId === project.id) {
@@ -811,16 +817,16 @@ else {
             title: "More actions",
         });
         /** @type {__VLS_StyleScopedClasses['more-btn']} */ ;
-        let __VLS_35;
+        let __VLS_40;
         /** @ts-ignore @type {typeof __VLS_components.MoreHorizontal} */
         MoreHorizontal;
         // @ts-ignore
-        const __VLS_36 = __VLS_asFunctionalComponent1(__VLS_35, new __VLS_35({
+        const __VLS_41 = __VLS_asFunctionalComponent1(__VLS_40, new __VLS_40({
             size: (14),
         }));
-        const __VLS_37 = __VLS_36({
+        const __VLS_42 = __VLS_41({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_36));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_41));
         __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
             ...{ class: "tree-children" },
         });
@@ -831,18 +837,18 @@ else {
                 ...{ class: "new-item-input" },
             });
             /** @type {__VLS_StyleScopedClasses['new-item-input']} */ ;
-            let __VLS_40;
+            let __VLS_45;
             /** @ts-ignore @type {typeof __VLS_components.Folder} */
             Folder;
             // @ts-ignore
-            const __VLS_41 = __VLS_asFunctionalComponent1(__VLS_40, new __VLS_40({
+            const __VLS_46 = __VLS_asFunctionalComponent1(__VLS_45, new __VLS_45({
                 size: (14),
                 ...{ class: "item-icon folder-icon" },
             }));
-            const __VLS_42 = __VLS_41({
+            const __VLS_47 = __VLS_46({
                 size: (14),
                 ...{ class: "item-icon folder-icon" },
-            }, ...__VLS_functionalComponentArgsRest(__VLS_41));
+            }, ...__VLS_functionalComponentArgsRest(__VLS_46));
             /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
             /** @type {__VLS_StyleScopedClasses['folder-icon']} */ ;
             __VLS_asFunctionalElement1(__VLS_intrinsics.input)({
@@ -907,29 +913,29 @@ else {
                 ...{ class: "expand-btn" },
             });
             /** @type {__VLS_StyleScopedClasses['expand-btn']} */ ;
-            let __VLS_45;
+            let __VLS_50;
             /** @ts-ignore @type {typeof __VLS_components.ChevronRightIcon} */
             ChevronRightIcon;
             // @ts-ignore
-            const __VLS_46 = __VLS_asFunctionalComponent1(__VLS_45, new __VLS_45({
-                size: (14),
-                ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(subproject.id) }) },
-            }));
-            const __VLS_47 = __VLS_46({
-                size: (14),
-                ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(subproject.id) }) },
-            }, ...__VLS_functionalComponentArgsRest(__VLS_46));
-            /** @type {__VLS_StyleScopedClasses['rotated']} */ ;
-            const __VLS_50 = (__VLS_ctx.isProjectExpanded(subproject.id) ? __VLS_ctx.FolderOpen : __VLS_ctx.Folder);
-            // @ts-ignore
             const __VLS_51 = __VLS_asFunctionalComponent1(__VLS_50, new __VLS_50({
                 size: (14),
-                ...{ class: "item-icon folder-icon" },
+                ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(subproject.id) }) },
             }));
             const __VLS_52 = __VLS_51({
                 size: (14),
-                ...{ class: "item-icon folder-icon" },
+                ...{ class: ({ rotated: __VLS_ctx.isProjectExpanded(subproject.id) }) },
             }, ...__VLS_functionalComponentArgsRest(__VLS_51));
+            /** @type {__VLS_StyleScopedClasses['rotated']} */ ;
+            const __VLS_55 = (__VLS_ctx.isProjectExpanded(subproject.id) ? __VLS_ctx.FolderOpen : __VLS_ctx.Folder);
+            // @ts-ignore
+            const __VLS_56 = __VLS_asFunctionalComponent1(__VLS_55, new __VLS_55({
+                size: (14),
+                ...{ class: "item-icon folder-icon" },
+            }));
+            const __VLS_57 = __VLS_56({
+                size: (14),
+                ...{ class: "item-icon folder-icon" },
+            }, ...__VLS_functionalComponentArgsRest(__VLS_56));
             /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
             /** @type {__VLS_StyleScopedClasses['folder-icon']} */ ;
             if (__VLS_ctx.editingProjectId === subproject.id) {
@@ -967,16 +973,16 @@ else {
                 ...{ class: "more-btn" },
             });
             /** @type {__VLS_StyleScopedClasses['more-btn']} */ ;
-            let __VLS_55;
+            let __VLS_60;
             /** @ts-ignore @type {typeof __VLS_components.MoreHorizontal} */
             MoreHorizontal;
             // @ts-ignore
-            const __VLS_56 = __VLS_asFunctionalComponent1(__VLS_55, new __VLS_55({
+            const __VLS_61 = __VLS_asFunctionalComponent1(__VLS_60, new __VLS_60({
                 size: (14),
             }));
-            const __VLS_57 = __VLS_56({
+            const __VLS_62 = __VLS_61({
                 size: (14),
-            }, ...__VLS_functionalComponentArgsRest(__VLS_56));
+            }, ...__VLS_functionalComponentArgsRest(__VLS_61));
             __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
                 ...{ class: "tree-children" },
             });
@@ -1005,18 +1011,18 @@ else {
                 /** @type {__VLS_StyleScopedClasses['tree-item']} */ ;
                 /** @type {__VLS_StyleScopedClasses['doc-item']} */ ;
                 /** @type {__VLS_StyleScopedClasses['active']} */ ;
-                let __VLS_60;
+                let __VLS_65;
                 /** @ts-ignore @type {typeof __VLS_components.FileText} */
                 FileText;
                 // @ts-ignore
-                const __VLS_61 = __VLS_asFunctionalComponent1(__VLS_60, new __VLS_60({
+                const __VLS_66 = __VLS_asFunctionalComponent1(__VLS_65, new __VLS_65({
                     size: (14),
                     ...{ class: "item-icon doc-icon" },
                 }));
-                const __VLS_62 = __VLS_61({
+                const __VLS_67 = __VLS_66({
                     size: (14),
                     ...{ class: "item-icon doc-icon" },
-                }, ...__VLS_functionalComponentArgsRest(__VLS_61));
+                }, ...__VLS_functionalComponentArgsRest(__VLS_66));
                 /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
                 /** @type {__VLS_StyleScopedClasses['doc-icon']} */ ;
                 __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({
@@ -1036,16 +1042,16 @@ else {
                     title: "Delete",
                 });
                 /** @type {__VLS_StyleScopedClasses['delete-btn']} */ ;
-                let __VLS_65;
+                let __VLS_70;
                 /** @ts-ignore @type {typeof __VLS_components.Trash2} */
                 Trash2;
                 // @ts-ignore
-                const __VLS_66 = __VLS_asFunctionalComponent1(__VLS_65, new __VLS_65({
+                const __VLS_71 = __VLS_asFunctionalComponent1(__VLS_70, new __VLS_70({
                     size: (12),
                 }));
-                const __VLS_67 = __VLS_66({
+                const __VLS_72 = __VLS_71({
                     size: (12),
-                }, ...__VLS_functionalComponentArgsRest(__VLS_66));
+                }, ...__VLS_functionalComponentArgsRest(__VLS_71));
                 // @ts-ignore
                 [];
             }
@@ -1125,18 +1131,18 @@ else {
                     ...{ class: "expand-btn" },
                 });
                 /** @type {__VLS_StyleScopedClasses['expand-btn']} */ ;
-                let __VLS_70;
+                let __VLS_75;
                 /** @ts-ignore @type {typeof __VLS_components.ChevronRightIcon} */
                 ChevronRightIcon;
                 // @ts-ignore
-                const __VLS_71 = __VLS_asFunctionalComponent1(__VLS_70, new __VLS_70({
+                const __VLS_76 = __VLS_asFunctionalComponent1(__VLS_75, new __VLS_75({
                     size: (14),
                     ...{ class: ({ rotated: __VLS_ctx.isNoteExpanded(doc.id) }) },
                 }));
-                const __VLS_72 = __VLS_71({
+                const __VLS_77 = __VLS_76({
                     size: (14),
                     ...{ class: ({ rotated: __VLS_ctx.isNoteExpanded(doc.id) }) },
-                }, ...__VLS_functionalComponentArgsRest(__VLS_71));
+                }, ...__VLS_functionalComponentArgsRest(__VLS_76));
                 /** @type {__VLS_StyleScopedClasses['rotated']} */ ;
             }
             else {
@@ -1145,18 +1151,18 @@ else {
                 });
                 /** @type {__VLS_StyleScopedClasses['expand-placeholder']} */ ;
             }
-            let __VLS_75;
+            let __VLS_80;
             /** @ts-ignore @type {typeof __VLS_components.FileText} */
             FileText;
             // @ts-ignore
-            const __VLS_76 = __VLS_asFunctionalComponent1(__VLS_75, new __VLS_75({
+            const __VLS_81 = __VLS_asFunctionalComponent1(__VLS_80, new __VLS_80({
                 size: (14),
                 ...{ class: "item-icon doc-icon" },
             }));
-            const __VLS_77 = __VLS_76({
+            const __VLS_82 = __VLS_81({
                 size: (14),
                 ...{ class: "item-icon doc-icon" },
-            }, ...__VLS_functionalComponentArgsRest(__VLS_76));
+            }, ...__VLS_functionalComponentArgsRest(__VLS_81));
             /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
             /** @type {__VLS_StyleScopedClasses['doc-icon']} */ ;
             if (__VLS_ctx.editingNoteId === doc.id) {
@@ -1190,16 +1196,16 @@ else {
                 title: "Delete",
             });
             /** @type {__VLS_StyleScopedClasses['delete-btn']} */ ;
-            let __VLS_80;
+            let __VLS_85;
             /** @ts-ignore @type {typeof __VLS_components.Trash2} */
             Trash2;
             // @ts-ignore
-            const __VLS_81 = __VLS_asFunctionalComponent1(__VLS_80, new __VLS_80({
+            const __VLS_86 = __VLS_asFunctionalComponent1(__VLS_85, new __VLS_85({
                 size: (12),
             }));
-            const __VLS_82 = __VLS_81({
+            const __VLS_87 = __VLS_86({
                 size: (12),
-            }, ...__VLS_functionalComponentArgsRest(__VLS_81));
+            }, ...__VLS_functionalComponentArgsRest(__VLS_86));
             if (__VLS_ctx.hasNoteChildren(doc.id) && __VLS_ctx.isNoteExpanded(doc.id)) {
                 __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
                     ...{ class: "tree-children subnotes" },
@@ -1269,31 +1275,31 @@ else {
                     /** @type {__VLS_StyleScopedClasses['subnote']} */ ;
                     /** @type {__VLS_StyleScopedClasses['active']} */ ;
                     /** @type {__VLS_StyleScopedClasses['drag-over']} */ ;
-                    let __VLS_85;
+                    let __VLS_90;
                     /** @ts-ignore @type {typeof __VLS_components.CornerDownRight} */
                     CornerDownRight;
                     // @ts-ignore
-                    const __VLS_86 = __VLS_asFunctionalComponent1(__VLS_85, new __VLS_85({
+                    const __VLS_91 = __VLS_asFunctionalComponent1(__VLS_90, new __VLS_90({
                         size: (12),
                         ...{ class: "subnote-indicator" },
                     }));
-                    const __VLS_87 = __VLS_86({
+                    const __VLS_92 = __VLS_91({
                         size: (12),
                         ...{ class: "subnote-indicator" },
-                    }, ...__VLS_functionalComponentArgsRest(__VLS_86));
+                    }, ...__VLS_functionalComponentArgsRest(__VLS_91));
                     /** @type {__VLS_StyleScopedClasses['subnote-indicator']} */ ;
-                    let __VLS_90;
+                    let __VLS_95;
                     /** @ts-ignore @type {typeof __VLS_components.FileText} */
                     FileText;
                     // @ts-ignore
-                    const __VLS_91 = __VLS_asFunctionalComponent1(__VLS_90, new __VLS_90({
+                    const __VLS_96 = __VLS_asFunctionalComponent1(__VLS_95, new __VLS_95({
                         size: (14),
                         ...{ class: "item-icon doc-icon" },
                     }));
-                    const __VLS_92 = __VLS_91({
+                    const __VLS_97 = __VLS_96({
                         size: (14),
                         ...{ class: "item-icon doc-icon" },
-                    }, ...__VLS_functionalComponentArgsRest(__VLS_91));
+                    }, ...__VLS_functionalComponentArgsRest(__VLS_96));
                     /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
                     /** @type {__VLS_StyleScopedClasses['doc-icon']} */ ;
                     if (__VLS_ctx.editingNoteId === subnote.id) {
@@ -1329,16 +1335,16 @@ else {
                         title: "Delete",
                     });
                     /** @type {__VLS_StyleScopedClasses['delete-btn']} */ ;
-                    let __VLS_95;
+                    let __VLS_100;
                     /** @ts-ignore @type {typeof __VLS_components.Trash2} */
                     Trash2;
                     // @ts-ignore
-                    const __VLS_96 = __VLS_asFunctionalComponent1(__VLS_95, new __VLS_95({
+                    const __VLS_101 = __VLS_asFunctionalComponent1(__VLS_100, new __VLS_100({
                         size: (12),
                     }));
-                    const __VLS_97 = __VLS_96({
+                    const __VLS_102 = __VLS_101({
                         size: (12),
-                    }, ...__VLS_functionalComponentArgsRest(__VLS_96));
+                    }, ...__VLS_functionalComponentArgsRest(__VLS_101));
                     // @ts-ignore
                     [];
                 }
@@ -1365,16 +1371,16 @@ else {
                 ...{ class: "add-doc-btn" },
             });
             /** @type {__VLS_StyleScopedClasses['add-doc-btn']} */ ;
-            let __VLS_100;
+            let __VLS_105;
             /** @ts-ignore @type {typeof __VLS_components.Plus} */
             Plus;
             // @ts-ignore
-            const __VLS_101 = __VLS_asFunctionalComponent1(__VLS_100, new __VLS_100({
+            const __VLS_106 = __VLS_asFunctionalComponent1(__VLS_105, new __VLS_105({
                 size: (12),
             }));
-            const __VLS_102 = __VLS_101({
+            const __VLS_107 = __VLS_106({
                 size: (12),
-            }, ...__VLS_functionalComponentArgsRest(__VLS_101));
+            }, ...__VLS_functionalComponentArgsRest(__VLS_106));
         }
         // @ts-ignore
         [];
@@ -1385,18 +1391,18 @@ else {
         });
         /** @type {__VLS_StyleScopedClasses['new-item-input']} */ ;
         /** @type {__VLS_StyleScopedClasses['root-level']} */ ;
-        let __VLS_105;
+        let __VLS_110;
         /** @ts-ignore @type {typeof __VLS_components.Folder} */
         Folder;
         // @ts-ignore
-        const __VLS_106 = __VLS_asFunctionalComponent1(__VLS_105, new __VLS_105({
+        const __VLS_111 = __VLS_asFunctionalComponent1(__VLS_110, new __VLS_110({
             size: (16),
             ...{ class: "item-icon folder-icon" },
         }));
-        const __VLS_107 = __VLS_106({
+        const __VLS_112 = __VLS_111({
             size: (16),
             ...{ class: "item-icon folder-icon" },
-        }, ...__VLS_functionalComponentArgsRest(__VLS_106));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_111));
         /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
         /** @type {__VLS_StyleScopedClasses['folder-icon']} */ ;
         __VLS_asFunctionalElement1(__VLS_intrinsics.input)({
@@ -1434,18 +1440,18 @@ else {
         ...{ class: "section-header" },
     });
     /** @type {__VLS_StyleScopedClasses['section-header']} */ ;
-    let __VLS_110;
+    let __VLS_115;
     /** @ts-ignore @type {typeof __VLS_components.FileText} */
     FileText;
     // @ts-ignore
-    const __VLS_111 = __VLS_asFunctionalComponent1(__VLS_110, new __VLS_110({
+    const __VLS_116 = __VLS_asFunctionalComponent1(__VLS_115, new __VLS_115({
         size: (14),
         ...{ class: "section-icon" },
     }));
-    const __VLS_112 = __VLS_111({
+    const __VLS_117 = __VLS_116({
         size: (14),
         ...{ class: "section-icon" },
-    }, ...__VLS_functionalComponentArgsRest(__VLS_111));
+    }, ...__VLS_functionalComponentArgsRest(__VLS_116));
     /** @type {__VLS_StyleScopedClasses['section-icon']} */ ;
     __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
     __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({
@@ -1530,18 +1536,18 @@ else {
                 ...{ class: "expand-btn" },
             });
             /** @type {__VLS_StyleScopedClasses['expand-btn']} */ ;
-            let __VLS_115;
+            let __VLS_120;
             /** @ts-ignore @type {typeof __VLS_components.ChevronRightIcon} */
             ChevronRightIcon;
             // @ts-ignore
-            const __VLS_116 = __VLS_asFunctionalComponent1(__VLS_115, new __VLS_115({
+            const __VLS_121 = __VLS_asFunctionalComponent1(__VLS_120, new __VLS_120({
                 size: (14),
                 ...{ class: ({ rotated: __VLS_ctx.isNoteExpanded(doc.id) }) },
             }));
-            const __VLS_117 = __VLS_116({
+            const __VLS_122 = __VLS_121({
                 size: (14),
                 ...{ class: ({ rotated: __VLS_ctx.isNoteExpanded(doc.id) }) },
-            }, ...__VLS_functionalComponentArgsRest(__VLS_116));
+            }, ...__VLS_functionalComponentArgsRest(__VLS_121));
             /** @type {__VLS_StyleScopedClasses['rotated']} */ ;
         }
         else {
@@ -1550,18 +1556,18 @@ else {
             });
             /** @type {__VLS_StyleScopedClasses['expand-placeholder']} */ ;
         }
-        let __VLS_120;
+        let __VLS_125;
         /** @ts-ignore @type {typeof __VLS_components.FileText} */
         FileText;
         // @ts-ignore
-        const __VLS_121 = __VLS_asFunctionalComponent1(__VLS_120, new __VLS_120({
+        const __VLS_126 = __VLS_asFunctionalComponent1(__VLS_125, new __VLS_125({
             size: (14),
             ...{ class: "item-icon doc-icon" },
         }));
-        const __VLS_122 = __VLS_121({
+        const __VLS_127 = __VLS_126({
             size: (14),
             ...{ class: "item-icon doc-icon" },
-        }, ...__VLS_functionalComponentArgsRest(__VLS_121));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_126));
         /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
         /** @type {__VLS_StyleScopedClasses['doc-icon']} */ ;
         if (__VLS_ctx.editingNoteId === doc.id) {
@@ -1600,16 +1606,16 @@ else {
             title: "Delete",
         });
         /** @type {__VLS_StyleScopedClasses['delete-btn']} */ ;
-        let __VLS_125;
+        let __VLS_130;
         /** @ts-ignore @type {typeof __VLS_components.Trash2} */
         Trash2;
         // @ts-ignore
-        const __VLS_126 = __VLS_asFunctionalComponent1(__VLS_125, new __VLS_125({
+        const __VLS_131 = __VLS_asFunctionalComponent1(__VLS_130, new __VLS_130({
             size: (12),
         }));
-        const __VLS_127 = __VLS_126({
+        const __VLS_132 = __VLS_131({
             size: (12),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_126));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_131));
         if (__VLS_ctx.hasNoteChildren(doc.id) && __VLS_ctx.isNoteExpanded(doc.id)) {
             __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
                 ...{ class: "tree-children subnotes" },
@@ -1679,31 +1685,31 @@ else {
                 /** @type {__VLS_StyleScopedClasses['subnote']} */ ;
                 /** @type {__VLS_StyleScopedClasses['active']} */ ;
                 /** @type {__VLS_StyleScopedClasses['drag-over']} */ ;
-                let __VLS_130;
+                let __VLS_135;
                 /** @ts-ignore @type {typeof __VLS_components.CornerDownRight} */
                 CornerDownRight;
                 // @ts-ignore
-                const __VLS_131 = __VLS_asFunctionalComponent1(__VLS_130, new __VLS_130({
+                const __VLS_136 = __VLS_asFunctionalComponent1(__VLS_135, new __VLS_135({
                     size: (12),
                     ...{ class: "subnote-indicator" },
                 }));
-                const __VLS_132 = __VLS_131({
+                const __VLS_137 = __VLS_136({
                     size: (12),
                     ...{ class: "subnote-indicator" },
-                }, ...__VLS_functionalComponentArgsRest(__VLS_131));
+                }, ...__VLS_functionalComponentArgsRest(__VLS_136));
                 /** @type {__VLS_StyleScopedClasses['subnote-indicator']} */ ;
-                let __VLS_135;
+                let __VLS_140;
                 /** @ts-ignore @type {typeof __VLS_components.FileText} */
                 FileText;
                 // @ts-ignore
-                const __VLS_136 = __VLS_asFunctionalComponent1(__VLS_135, new __VLS_135({
+                const __VLS_141 = __VLS_asFunctionalComponent1(__VLS_140, new __VLS_140({
                     size: (14),
                     ...{ class: "item-icon doc-icon" },
                 }));
-                const __VLS_137 = __VLS_136({
+                const __VLS_142 = __VLS_141({
                     size: (14),
                     ...{ class: "item-icon doc-icon" },
-                }, ...__VLS_functionalComponentArgsRest(__VLS_136));
+                }, ...__VLS_functionalComponentArgsRest(__VLS_141));
                 /** @type {__VLS_StyleScopedClasses['item-icon']} */ ;
                 /** @type {__VLS_StyleScopedClasses['doc-icon']} */ ;
                 if (__VLS_ctx.editingNoteId === subnote.id) {
@@ -1739,16 +1745,16 @@ else {
                     title: "Delete",
                 });
                 /** @type {__VLS_StyleScopedClasses['delete-btn']} */ ;
-                let __VLS_140;
+                let __VLS_145;
                 /** @ts-ignore @type {typeof __VLS_components.Trash2} */
                 Trash2;
                 // @ts-ignore
-                const __VLS_141 = __VLS_asFunctionalComponent1(__VLS_140, new __VLS_140({
+                const __VLS_146 = __VLS_asFunctionalComponent1(__VLS_145, new __VLS_145({
                     size: (12),
                 }));
-                const __VLS_142 = __VLS_141({
+                const __VLS_147 = __VLS_146({
                     size: (12),
-                }, ...__VLS_functionalComponentArgsRest(__VLS_141));
+                }, ...__VLS_functionalComponentArgsRest(__VLS_146));
                 // @ts-ignore
                 [];
             }
@@ -1774,10 +1780,10 @@ else {
     __VLS_asFunctionalDirective(__VLS_directives.vShow, {})(null, { ...__VLS_directiveBindingRestFields, value: (__VLS_ctx.activeTab === 'toc') }, null, null);
     /** @type {__VLS_StyleScopedClasses['panel']} */ ;
     /** @type {__VLS_StyleScopedClasses['toc-panel']} */ ;
-    const __VLS_145 = TableOfContents;
+    const __VLS_150 = TableOfContents;
     // @ts-ignore
-    const __VLS_146 = __VLS_asFunctionalComponent1(__VLS_145, new __VLS_145({}));
-    const __VLS_147 = __VLS_146({}, ...__VLS_functionalComponentArgsRest(__VLS_146));
+    const __VLS_151 = __VLS_asFunctionalComponent1(__VLS_150, new __VLS_150({}));
+    const __VLS_152 = __VLS_151({}, ...__VLS_functionalComponentArgsRest(__VLS_151));
     __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
         ...{ class: "user-section" },
         ref: "userMenuRef",
@@ -1816,33 +1822,33 @@ else {
         });
         /** @type {__VLS_StyleScopedClasses['user-badge']} */ ;
     }
-    let __VLS_150;
+    let __VLS_155;
     /** @ts-ignore @type {typeof __VLS_components.ChevronUp} */
     ChevronUp;
     // @ts-ignore
-    const __VLS_151 = __VLS_asFunctionalComponent1(__VLS_150, new __VLS_150({
+    const __VLS_156 = __VLS_asFunctionalComponent1(__VLS_155, new __VLS_155({
         size: (16),
         ...{ class: "expand-icon" },
         ...{ class: ({ rotated: !__VLS_ctx.showUserMenu }) },
     }));
-    const __VLS_152 = __VLS_151({
+    const __VLS_157 = __VLS_156({
         size: (16),
         ...{ class: "expand-icon" },
         ...{ class: ({ rotated: !__VLS_ctx.showUserMenu }) },
-    }, ...__VLS_functionalComponentArgsRest(__VLS_151));
+    }, ...__VLS_functionalComponentArgsRest(__VLS_156));
     /** @type {__VLS_StyleScopedClasses['expand-icon']} */ ;
     /** @type {__VLS_StyleScopedClasses['rotated']} */ ;
-    let __VLS_155;
+    let __VLS_160;
     /** @ts-ignore @type {typeof __VLS_components.Transition | typeof __VLS_components.Transition} */
     Transition;
     // @ts-ignore
-    const __VLS_156 = __VLS_asFunctionalComponent1(__VLS_155, new __VLS_155({
+    const __VLS_161 = __VLS_asFunctionalComponent1(__VLS_160, new __VLS_160({
         name: "slide-up",
     }));
-    const __VLS_157 = __VLS_156({
+    const __VLS_162 = __VLS_161({
         name: "slide-up",
-    }, ...__VLS_functionalComponentArgsRest(__VLS_156));
-    const { default: __VLS_160 } = __VLS_158.slots;
+    }, ...__VLS_functionalComponentArgsRest(__VLS_161));
+    const { default: __VLS_165 } = __VLS_163.slots;
     if (__VLS_ctx.showUserMenu) {
         __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
             ...{ onClick: () => { } },
@@ -1866,32 +1872,9 @@ else {
             ...{ class: ({ active: __VLS_ctx.currentTheme === 'light' }) },
         });
         /** @type {__VLS_StyleScopedClasses['active']} */ ;
-        let __VLS_161;
+        let __VLS_166;
         /** @ts-ignore @type {typeof __VLS_components.Sun} */
         Sun;
-        // @ts-ignore
-        const __VLS_162 = __VLS_asFunctionalComponent1(__VLS_161, new __VLS_161({
-            size: (14),
-        }));
-        const __VLS_163 = __VLS_162({
-            size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_162));
-        __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
-            ...{ onClick: (...[$event]) => {
-                    if (!!(!__VLS_ctx.sidebarVisible))
-                        return;
-                    if (!(__VLS_ctx.showUserMenu))
-                        return;
-                    __VLS_ctx.setTheme('dark');
-                    // @ts-ignore
-                    [setTheme, currentTheme,];
-                } },
-            ...{ class: ({ active: __VLS_ctx.currentTheme === 'dark' }) },
-        });
-        /** @type {__VLS_StyleScopedClasses['active']} */ ;
-        let __VLS_166;
-        /** @ts-ignore @type {typeof __VLS_components.Moon} */
-        Moon;
         // @ts-ignore
         const __VLS_167 = __VLS_asFunctionalComponent1(__VLS_166, new __VLS_166({
             size: (14),
@@ -1905,16 +1888,16 @@ else {
                         return;
                     if (!(__VLS_ctx.showUserMenu))
                         return;
-                    __VLS_ctx.setTheme('system');
+                    __VLS_ctx.setTheme('dark');
                     // @ts-ignore
                     [setTheme, currentTheme,];
                 } },
-            ...{ class: ({ active: __VLS_ctx.currentTheme === 'system' }) },
+            ...{ class: ({ active: __VLS_ctx.currentTheme === 'dark' }) },
         });
         /** @type {__VLS_StyleScopedClasses['active']} */ ;
         let __VLS_171;
-        /** @ts-ignore @type {typeof __VLS_components.Monitor} */
-        Monitor;
+        /** @ts-ignore @type {typeof __VLS_components.Moon} */
+        Moon;
         // @ts-ignore
         const __VLS_172 = __VLS_asFunctionalComponent1(__VLS_171, new __VLS_171({
             size: (14),
@@ -1922,6 +1905,29 @@ else {
         const __VLS_173 = __VLS_172({
             size: (14),
         }, ...__VLS_functionalComponentArgsRest(__VLS_172));
+        __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
+            ...{ onClick: (...[$event]) => {
+                    if (!!(!__VLS_ctx.sidebarVisible))
+                        return;
+                    if (!(__VLS_ctx.showUserMenu))
+                        return;
+                    __VLS_ctx.setTheme('system');
+                    // @ts-ignore
+                    [setTheme, currentTheme,];
+                } },
+            ...{ class: ({ active: __VLS_ctx.currentTheme === 'system' }) },
+        });
+        /** @type {__VLS_StyleScopedClasses['active']} */ ;
+        let __VLS_176;
+        /** @ts-ignore @type {typeof __VLS_components.Monitor} */
+        Monitor;
+        // @ts-ignore
+        const __VLS_177 = __VLS_asFunctionalComponent1(__VLS_176, new __VLS_176({
+            size: (14),
+        }));
+        const __VLS_178 = __VLS_177({
+            size: (14),
+        }, ...__VLS_functionalComponentArgsRest(__VLS_177));
         __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
             ...{ class: "menu-divider" },
         });
@@ -1931,16 +1937,16 @@ else {
             ...{ class: "menu-item" },
         });
         /** @type {__VLS_StyleScopedClasses['menu-item']} */ ;
-        let __VLS_176;
+        let __VLS_181;
         /** @ts-ignore @type {typeof __VLS_components.Settings} */
         Settings;
         // @ts-ignore
-        const __VLS_177 = __VLS_asFunctionalComponent1(__VLS_176, new __VLS_176({
+        const __VLS_182 = __VLS_asFunctionalComponent1(__VLS_181, new __VLS_181({
             size: (16),
         }));
-        const __VLS_178 = __VLS_177({
+        const __VLS_183 = __VLS_182({
             size: (16),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_177));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_182));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({
             ...{ class: "shortcut" },
@@ -1951,25 +1957,9 @@ else {
             ...{ class: "menu-item" },
         });
         /** @type {__VLS_StyleScopedClasses['menu-item']} */ ;
-        let __VLS_181;
+        let __VLS_186;
         /** @ts-ignore @type {typeof __VLS_components.MessageCircle} */
         MessageCircle;
-        // @ts-ignore
-        const __VLS_182 = __VLS_asFunctionalComponent1(__VLS_181, new __VLS_181({
-            size: (16),
-        }));
-        const __VLS_183 = __VLS_182({
-            size: (16),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_182));
-        __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
-        __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
-            ...{ onClick: (__VLS_ctx.closeUserMenu) },
-            ...{ class: "menu-item" },
-        });
-        /** @type {__VLS_StyleScopedClasses['menu-item']} */ ;
-        let __VLS_186;
-        /** @ts-ignore @type {typeof __VLS_components.Trash2} */
-        Trash2;
         // @ts-ignore
         const __VLS_187 = __VLS_asFunctionalComponent1(__VLS_186, new __VLS_186({
             size: (16),
@@ -1977,6 +1967,22 @@ else {
         const __VLS_188 = __VLS_187({
             size: (16),
         }, ...__VLS_functionalComponentArgsRest(__VLS_187));
+        __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
+        __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
+            ...{ onClick: (__VLS_ctx.closeUserMenu) },
+            ...{ class: "menu-item" },
+        });
+        /** @type {__VLS_StyleScopedClasses['menu-item']} */ ;
+        let __VLS_191;
+        /** @ts-ignore @type {typeof __VLS_components.Trash2} */
+        Trash2;
+        // @ts-ignore
+        const __VLS_192 = __VLS_asFunctionalComponent1(__VLS_191, new __VLS_191({
+            size: (16),
+        }));
+        const __VLS_193 = __VLS_192({
+            size: (16),
+        }, ...__VLS_functionalComponentArgsRest(__VLS_192));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
             ...{ class: "menu-divider" },
@@ -1989,28 +1995,9 @@ else {
             });
             /** @type {__VLS_StyleScopedClasses['menu-item']} */ ;
             /** @type {__VLS_StyleScopedClasses['danger']} */ ;
-            let __VLS_191;
+            let __VLS_196;
             /** @ts-ignore @type {typeof __VLS_components.LogOut} */
             LogOut;
-            // @ts-ignore
-            const __VLS_192 = __VLS_asFunctionalComponent1(__VLS_191, new __VLS_191({
-                size: (16),
-            }));
-            const __VLS_193 = __VLS_192({
-                size: (16),
-            }, ...__VLS_functionalComponentArgsRest(__VLS_192));
-            __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
-        }
-        else {
-            __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
-                ...{ onClick: (__VLS_ctx.goToAuth) },
-                ...{ class: "menu-item primary" },
-            });
-            /** @type {__VLS_StyleScopedClasses['menu-item']} */ ;
-            /** @type {__VLS_StyleScopedClasses['primary']} */ ;
-            let __VLS_196;
-            /** @ts-ignore @type {typeof __VLS_components.User} */
-            User;
             // @ts-ignore
             const __VLS_197 = __VLS_asFunctionalComponent1(__VLS_196, new __VLS_196({
                 size: (16),
@@ -2020,22 +2007,41 @@ else {
             }, ...__VLS_functionalComponentArgsRest(__VLS_197));
             __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         }
+        else {
+            __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
+                ...{ onClick: (__VLS_ctx.goToAuth) },
+                ...{ class: "menu-item primary" },
+            });
+            /** @type {__VLS_StyleScopedClasses['menu-item']} */ ;
+            /** @type {__VLS_StyleScopedClasses['primary']} */ ;
+            let __VLS_201;
+            /** @ts-ignore @type {typeof __VLS_components.User} */
+            User;
+            // @ts-ignore
+            const __VLS_202 = __VLS_asFunctionalComponent1(__VLS_201, new __VLS_201({
+                size: (16),
+            }));
+            const __VLS_203 = __VLS_202({
+                size: (16),
+            }, ...__VLS_functionalComponentArgsRest(__VLS_202));
+            __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
+        }
     }
     // @ts-ignore
     [authStore, currentTheme, goToSettings, closeUserMenu, closeUserMenu, signOut, goToAuth,];
-    var __VLS_158;
+    var __VLS_163;
 }
-let __VLS_201;
+let __VLS_206;
 /** @ts-ignore @type {typeof __VLS_components.Teleport | typeof __VLS_components.Teleport} */
 Teleport;
 // @ts-ignore
-const __VLS_202 = __VLS_asFunctionalComponent1(__VLS_201, new __VLS_201({
+const __VLS_207 = __VLS_asFunctionalComponent1(__VLS_206, new __VLS_206({
     to: "body",
 }));
-const __VLS_203 = __VLS_202({
+const __VLS_208 = __VLS_207({
     to: "body",
-}, ...__VLS_functionalComponentArgsRest(__VLS_202));
-const { default: __VLS_206 } = __VLS_204.slots;
+}, ...__VLS_functionalComponentArgsRest(__VLS_207));
+const { default: __VLS_211 } = __VLS_209.slots;
 if (__VLS_ctx.contextMenu.show) {
     __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
         ...{ onClick: () => { } },
@@ -2055,16 +2061,16 @@ if (__VLS_ctx.contextMenu.show) {
                     [contextMenu, contextMenu, contextMenu, contextMenu, handleContextMenuAction,];
                 } },
         });
-        let __VLS_207;
+        let __VLS_212;
         /** @ts-ignore @type {typeof __VLS_components.FilePlus} */
         FilePlus;
         // @ts-ignore
-        const __VLS_208 = __VLS_asFunctionalComponent1(__VLS_207, new __VLS_207({
+        const __VLS_213 = __VLS_asFunctionalComponent1(__VLS_212, new __VLS_212({
             size: (14),
         }));
-        const __VLS_209 = __VLS_208({
+        const __VLS_214 = __VLS_213({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_208));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_213));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
             ...{ onClick: (...[$event]) => {
@@ -2077,16 +2083,16 @@ if (__VLS_ctx.contextMenu.show) {
                     [handleContextMenuAction,];
                 } },
         });
-        let __VLS_212;
+        let __VLS_217;
         /** @ts-ignore @type {typeof __VLS_components.FolderPlus} */
         FolderPlus;
         // @ts-ignore
-        const __VLS_213 = __VLS_asFunctionalComponent1(__VLS_212, new __VLS_212({
+        const __VLS_218 = __VLS_asFunctionalComponent1(__VLS_217, new __VLS_217({
             size: (14),
         }));
-        const __VLS_214 = __VLS_213({
+        const __VLS_219 = __VLS_218({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_213));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_218));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
             ...{ class: "menu-divider" },
@@ -2103,16 +2109,16 @@ if (__VLS_ctx.contextMenu.show) {
                     [handleContextMenuAction,];
                 } },
         });
-        let __VLS_217;
+        let __VLS_222;
         /** @ts-ignore @type {typeof __VLS_components.Edit2} */
         Edit2;
         // @ts-ignore
-        const __VLS_218 = __VLS_asFunctionalComponent1(__VLS_217, new __VLS_217({
+        const __VLS_223 = __VLS_asFunctionalComponent1(__VLS_222, new __VLS_222({
             size: (14),
         }));
-        const __VLS_219 = __VLS_218({
+        const __VLS_224 = __VLS_223({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_218));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_223));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
             ...{ onClick: (...[$event]) => {
@@ -2127,16 +2133,16 @@ if (__VLS_ctx.contextMenu.show) {
             ...{ class: "danger" },
         });
         /** @type {__VLS_StyleScopedClasses['danger']} */ ;
-        let __VLS_222;
+        let __VLS_227;
         /** @ts-ignore @type {typeof __VLS_components.Trash2} */
         Trash2;
         // @ts-ignore
-        const __VLS_223 = __VLS_asFunctionalComponent1(__VLS_222, new __VLS_222({
+        const __VLS_228 = __VLS_asFunctionalComponent1(__VLS_227, new __VLS_227({
             size: (14),
         }));
-        const __VLS_224 = __VLS_223({
+        const __VLS_229 = __VLS_228({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_223));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_228));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
     }
     else if (__VLS_ctx.contextMenu.type === 'note') {
@@ -2153,16 +2159,16 @@ if (__VLS_ctx.contextMenu.show) {
                     [contextMenu, handleContextMenuAction,];
                 } },
         });
-        let __VLS_227;
+        let __VLS_232;
         /** @ts-ignore @type {typeof __VLS_components.CornerDownRight} */
         CornerDownRight;
         // @ts-ignore
-        const __VLS_228 = __VLS_asFunctionalComponent1(__VLS_227, new __VLS_227({
+        const __VLS_233 = __VLS_asFunctionalComponent1(__VLS_232, new __VLS_232({
             size: (14),
         }));
-        const __VLS_229 = __VLS_228({
+        const __VLS_234 = __VLS_233({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_228));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_233));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
             ...{ class: "menu-divider" },
@@ -2181,16 +2187,16 @@ if (__VLS_ctx.contextMenu.show) {
                     [handleContextMenuAction,];
                 } },
         });
-        let __VLS_232;
+        let __VLS_237;
         /** @ts-ignore @type {typeof __VLS_components.Edit2} */
         Edit2;
         // @ts-ignore
-        const __VLS_233 = __VLS_asFunctionalComponent1(__VLS_232, new __VLS_232({
+        const __VLS_238 = __VLS_asFunctionalComponent1(__VLS_237, new __VLS_237({
             size: (14),
         }));
-        const __VLS_234 = __VLS_233({
+        const __VLS_239 = __VLS_238({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_233));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_238));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.button, __VLS_intrinsics.button)({
             ...{ onClick: (...[$event]) => {
@@ -2205,16 +2211,16 @@ if (__VLS_ctx.contextMenu.show) {
                     [handleContextMenuAction,];
                 } },
         });
-        let __VLS_237;
+        let __VLS_242;
         /** @ts-ignore @type {typeof __VLS_components.FileText} */
         FileText;
         // @ts-ignore
-        const __VLS_238 = __VLS_asFunctionalComponent1(__VLS_237, new __VLS_237({
+        const __VLS_243 = __VLS_asFunctionalComponent1(__VLS_242, new __VLS_242({
             size: (14),
         }));
-        const __VLS_239 = __VLS_238({
+        const __VLS_244 = __VLS_243({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_238));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_243));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
         __VLS_asFunctionalElement1(__VLS_intrinsics.div, __VLS_intrinsics.div)({
             ...{ class: "menu-divider" },
@@ -2235,22 +2241,22 @@ if (__VLS_ctx.contextMenu.show) {
             ...{ class: "danger" },
         });
         /** @type {__VLS_StyleScopedClasses['danger']} */ ;
-        let __VLS_242;
+        let __VLS_247;
         /** @ts-ignore @type {typeof __VLS_components.Trash2} */
         Trash2;
         // @ts-ignore
-        const __VLS_243 = __VLS_asFunctionalComponent1(__VLS_242, new __VLS_242({
+        const __VLS_248 = __VLS_asFunctionalComponent1(__VLS_247, new __VLS_247({
             size: (14),
         }));
-        const __VLS_244 = __VLS_243({
+        const __VLS_249 = __VLS_248({
             size: (14),
-        }, ...__VLS_functionalComponentArgsRest(__VLS_243));
+        }, ...__VLS_functionalComponentArgsRest(__VLS_248));
         __VLS_asFunctionalElement1(__VLS_intrinsics.span, __VLS_intrinsics.span)({});
     }
 }
 // @ts-ignore
 [];
-var __VLS_204;
+var __VLS_209;
 // @ts-ignore
 [];
 const __VLS_export = (await import('vue')).defineComponent({});

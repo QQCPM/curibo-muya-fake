@@ -40,7 +40,7 @@ interface RoadmapPreferences {
     breakFrequency: string
 }
 
-interface LearningRoadmap {
+export interface LearningRoadmap {
     id: string
     title: string
     description?: string
@@ -444,6 +444,361 @@ export async function getCurrentWeekTasks(
 }
 
 // ============================================================================
+// Phase 2.2: New Daily Planning Tools (3 tools)
+// ============================================================================
+
+export const GenerateDailyPlanSchema = z.object({})
+
+export const GetTodayTasksSchema = z.object({
+    includeCompleted: z.boolean().optional().default(false)
+        .describe('Include completed/skipped tasks in the list'),
+})
+
+export const UpdateTaskStatusSchema = z.object({
+    taskId: z.string().uuid().describe('ID of the task to update'),
+    status: z.enum(['done', 'in_progress', 'skipped'])
+        .describe('New status for the task'),
+})
+
+export type GenerateDailyPlanInput = z.infer<typeof GenerateDailyPlanSchema>
+export type GetTodayTasksInput = z.infer<typeof GetTodayTasksSchema>
+export type UpdateTaskStatusInput = z.infer<typeof UpdateTaskStatusSchema>
+
+/**
+ * Generate today's study plan from active roadmaps
+ * Uses AI to create personalized daily tasks
+ */
+export async function generateDailyPlan(
+    _input: GenerateDailyPlanInput,
+    ctx: ToolContext
+): Promise<ToolResult<{
+    plan: {
+        date: string
+        focus: string
+        tasks: Array<{
+            id: string
+            description: string
+            priority: string
+            estimatedMinutes: number
+            status: string
+        }>
+        estimatedMinutes: number
+    }
+}>> {
+    try {
+        const today = new Date().toISOString().split('T')[0]
+
+        // Check if we already have today's plan
+        const { data: existingPlan } = await ctx.supabase
+            .from('ai_memory')
+            .select('content')
+            .eq('user_id', ctx.userId)
+            .eq('memory_type', 'daily_plan')
+            .single()
+
+        if (existingPlan?.content?.date === today) {
+            const plan = existingPlan.content
+            return {
+                success: true,
+                data: {
+                    plan: {
+                        date: plan.date,
+                        focus: plan.focus,
+                        tasks: plan.tasks,
+                        estimatedMinutes: plan.estimatedMinutes,
+                    },
+                },
+            }
+        }
+
+        // Get active roadmaps
+        const { data: roadmaps } = await ctx.supabase
+            .from('learning_roadmaps')
+            .select('id, title, topic, current_week, total_weeks, content')
+            .eq('user_id', ctx.userId)
+            .eq('status', 'active')
+
+        if (!roadmaps || roadmaps.length === 0) {
+            // No active roadmaps, create a minimal plan
+            const emptyPlan = {
+                id: crypto.randomUUID(),
+                date: today,
+                focus: 'No active roadmaps. Create a learning roadmap to get personalized tasks.',
+                tasks: [],
+                estimatedMinutes: 0,
+                completedMinutes: 0,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+            }
+
+            await ctx.supabase.from('ai_memory').upsert({
+                user_id: ctx.userId,
+                memory_type: 'daily_plan',
+                content: emptyPlan,
+                updated_at: new Date().toISOString(),
+            }, { onConflict: 'user_id,memory_type' })
+
+            return {
+                success: true,
+                data: {
+                    plan: {
+                        date: emptyPlan.date,
+                        focus: emptyPlan.focus,
+                        tasks: [],
+                        estimatedMinutes: 0,
+                    },
+                },
+            }
+        }
+
+        // Create a simple plan from roadmap data
+        const tasks: Array<{
+            id: string
+            description: string
+            priority: string
+            estimatedMinutes: number
+            status: string
+        }> = []
+
+        for (const roadmap of roadmaps.slice(0, 2)) {
+            const content = roadmap.content as {
+                phases: Array<{
+                    name: string
+                    themes: Array<{
+                        week: number
+                        focus: string
+                        topics: string[]
+                    }>
+                }>
+            }
+
+            for (const phase of content.phases || []) {
+                for (const theme of phase.themes || []) {
+                    if (theme.week === roadmap.current_week) {
+                        // Add a task for each topic (max 2 per roadmap)
+                        for (const topic of theme.topics.slice(0, 2)) {
+                            tasks.push({
+                                id: crypto.randomUUID(),
+                                description: `Study: ${topic} (${roadmap.title})`,
+                                priority: 'medium',
+                                estimatedMinutes: 30,
+                                status: 'pending',
+                            })
+                        }
+                    }
+                }
+            }
+        }
+
+        const focus = roadmaps.length > 0
+            ? `Focus on ${roadmaps.map(r => r.topic || r.title).join(' and ')}`
+            : 'Plan your learning goals'
+
+        const now = new Date().toISOString()
+        const newPlan = {
+            id: crypto.randomUUID(),
+            date: today,
+            focus,
+            tasks,
+            estimatedMinutes: tasks.reduce((sum, t) => sum + t.estimatedMinutes, 0),
+            completedMinutes: 0,
+            createdAt: now,
+            updatedAt: now,
+        }
+
+        await ctx.supabase.from('ai_memory').upsert({
+            user_id: ctx.userId,
+            memory_type: 'daily_plan',
+            content: newPlan,
+            updated_at: now,
+        }, { onConflict: 'user_id,memory_type' })
+
+        return {
+            success: true,
+            data: {
+                plan: {
+                    date: newPlan.date,
+                    focus: newPlan.focus,
+                    tasks: newPlan.tasks,
+                    estimatedMinutes: newPlan.estimatedMinutes,
+                },
+            },
+        }
+    } catch (err) {
+        return { success: false, error: String(err) }
+    }
+}
+
+/**
+ * Get today's tasks from the daily plan
+ */
+export async function getTodayTasks(
+    input: GetTodayTasksInput,
+    ctx: ToolContext
+): Promise<ToolResult<{
+    date: string
+    focus: string
+    tasks: Array<{
+        id: string
+        description: string
+        priority: string
+        estimatedMinutes: number
+        status: string
+    }>
+    progress: {
+        completed: number
+        total: number
+        completedMinutes: number
+        estimatedMinutes: number
+    }
+}>> {
+    try {
+        const { data: memoryData } = await ctx.supabase
+            .from('ai_memory')
+            .select('content')
+            .eq('user_id', ctx.userId)
+            .eq('memory_type', 'daily_plan')
+            .single()
+
+        if (!memoryData?.content) {
+            return { success: false, error: 'No daily plan found. Generate one first.' }
+        }
+
+        const plan = memoryData.content as {
+            date: string
+            focus: string
+            tasks: Array<{
+                id: string
+                description: string
+                priority: string
+                estimatedMinutes: number
+                status: string
+            }>
+            estimatedMinutes: number
+            completedMinutes: number
+        }
+
+        // Check if plan is for today
+        const today = new Date().toISOString().split('T')[0]
+        if (plan.date !== today) {
+            return { success: false, error: 'Daily plan is outdated. Generate a new one.' }
+        }
+
+        // Filter tasks based on includeCompleted
+        let tasks = plan.tasks
+        if (!input.includeCompleted) {
+            tasks = tasks.filter(t => t.status !== 'done' && t.status !== 'skipped')
+        }
+
+        const completedCount = plan.tasks.filter(t => t.status === 'done').length
+
+        return {
+            success: true,
+            data: {
+                date: plan.date,
+                focus: plan.focus,
+                tasks,
+                progress: {
+                    completed: completedCount,
+                    total: plan.tasks.length,
+                    completedMinutes: plan.completedMinutes || 0,
+                    estimatedMinutes: plan.estimatedMinutes,
+                },
+            },
+        }
+    } catch (err) {
+        return { success: false, error: String(err) }
+    }
+}
+
+/**
+ * Update a task's status (done, in_progress, skipped)
+ */
+export async function updateTaskStatus(
+    input: UpdateTaskStatusInput,
+    ctx: ToolContext
+): Promise<ToolResult<{
+    updated: boolean
+    task: {
+        id: string
+        description: string
+        status: string
+    }
+    progress: {
+        completed: number
+        total: number
+    }
+}>> {
+    try {
+        const { data: memoryData } = await ctx.supabase
+            .from('ai_memory')
+            .select('content')
+            .eq('user_id', ctx.userId)
+            .eq('memory_type', 'daily_plan')
+            .single()
+
+        if (!memoryData?.content) {
+            return { success: false, error: 'No daily plan found' }
+        }
+
+        const plan = memoryData.content as {
+            tasks: Array<{
+                id: string
+                description: string
+                status: string
+                estimatedMinutes: number
+            }>
+            completedMinutes: number
+        }
+
+        const task = plan.tasks.find(t => t.id === input.taskId)
+        if (!task) {
+            return { success: false, error: `Task not found: ${input.taskId}` }
+        }
+
+        const previousStatus = task.status
+        task.status = input.status
+
+        // Update completed minutes
+        if (input.status === 'done' && previousStatus !== 'done') {
+            plan.completedMinutes = (plan.completedMinutes || 0) + task.estimatedMinutes
+        } else if (previousStatus === 'done' && input.status !== 'done') {
+            plan.completedMinutes = Math.max(0, (plan.completedMinutes || 0) - task.estimatedMinutes)
+        }
+
+        // Save updated plan
+        await ctx.supabase.from('ai_memory').upsert({
+            user_id: ctx.userId,
+            memory_type: 'daily_plan',
+            content: { ...memoryData.content, ...plan },
+            updated_at: new Date().toISOString(),
+        }, {
+            onConflict: 'user_id,memory_type',
+        })
+
+        const completedCount = plan.tasks.filter(t => t.status === 'done').length
+
+        return {
+            success: true,
+            data: {
+                updated: true,
+                task: {
+                    id: task.id,
+                    description: task.description,
+                    status: task.status,
+                },
+                progress: {
+                    completed: completedCount,
+                    total: plan.tasks.length,
+                },
+            },
+        }
+    } catch (err) {
+        return { success: false, error: String(err) }
+    }
+}
+
+// ============================================================================
 // Tool Definitions for LangGraph
 // ============================================================================
 
@@ -455,4 +810,9 @@ export const secretaryTools = [
     { name: 'get_roadmap', description: 'Get learning roadmaps by ID or filter by status', schema: GetRoadmapSchema, execute: getRoadmap },
     { name: 'advance_roadmap_week', description: 'Advance a roadmap to the next week', schema: AdvanceRoadmapWeekSchema, execute: advanceRoadmapWeek },
     { name: 'get_current_week_tasks', description: 'Get the current week tasks and focus from a roadmap', schema: GetCurrentWeekTasksSchema, execute: getCurrentWeekTasks },
+    // Phase 2.2: New Daily Planning Tools
+    { name: 'generate_daily_plan', description: 'Generate today\'s study plan from active roadmaps', schema: GenerateDailyPlanSchema, execute: generateDailyPlan },
+    { name: 'get_today_tasks', description: 'Get today\'s tasks with progress info', schema: GetTodayTasksSchema, execute: getTodayTasks },
+    { name: 'update_task_status', description: 'Mark a task as done, in progress, or skipped', schema: UpdateTaskStatusSchema, execute: updateTaskStatus },
 ] as const
+

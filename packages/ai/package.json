@@ -25,12 +25,18 @@
     "./tools": {
       "import": "./src/tools/index.ts",
       "types": "./src/tools/index.ts"
+    },
+    "./vercel": {
+      "import": "./src/vercel/index.ts",
+      "types": "./src/vercel/index.ts"
     }
   },
   "scripts": {
     "build": "tsc",
     "lint": "eslint src/",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^0.0.55",
@@ -45,6 +51,7 @@
     "@langchain/openai": "^0.3.0",
     "@supabase/supabase-js": "^2.90.1",
     "ai": "^3.4.0",
+    "js-tiktoken": "^1.0.14",
     "openai": "^4.70.0",
     "zod": "^3.23.0"
   },
@@ -54,6 +61,7 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
-    "typescript": "~5.7.0"
+    "typescript": "~5.7.0",
+    "vitest": "^2.1.0"
   }
 }

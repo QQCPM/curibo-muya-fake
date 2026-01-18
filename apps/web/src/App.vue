@@ -34,7 +34,7 @@ const appClasses = computed(() => ({
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: var(--bg-color);
+  background: var(--app-bg);
   color: var(--text-color);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }

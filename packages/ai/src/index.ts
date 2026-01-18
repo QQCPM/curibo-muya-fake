@@ -2,9 +2,15 @@
  * @inkdown/ai - AI Provider and Agent Abstraction
  *
  * This package provides:
- * - AI provider abstraction (OpenAI, Ollama Cloud, Gemini)
- * - LangGraph-based agents for various tasks
+ * - AI provider abstraction (OpenAI GPT-5.2, Ollama Cloud GLM-4.6, Gemini 3 Pro)
+ * - Vercel AI SDK integration for simplified agent implementation
+ * - LangGraph-based agents for complex workflows
  * - Tool definitions for agent actions (26 tools)
+ * 
+ * For new code, prefer using the Vercel AI SDK integration:
+ * ```typescript
+ * import { runSecretary, streamChat } from '@inkdown/ai/vercel'
+ * ```
  */
 
 // =============================================================================

@@ -1159,8 +1159,9 @@ const tabs = [
 <style scoped>
 .sidebar {
   height: 100%;
-  background: var(--sidebar-bg, #1e1e1e);
-  border-right: 1px solid var(--border-color, #333);
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border-color);
+  box-shadow: inset -1px 0 0 var(--premium-glow);
   display: flex;
   flex-direction: column;
   transition: width 0.2s ease;
@@ -1248,15 +1249,20 @@ const tabs = [
 }
 
 .quick-action-btn.primary {
-  background: var(--primary-color, #7C9EF8);
+  background: var(--primary-gradient);
   color: #FFFFFF;
-  border-color: transparent;
+  border: none;
+  box-shadow:
+    0 2px 8px rgba(16, 185, 129, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .quick-action-btn.primary:hover {
-  opacity: 0.9;
-  background: var(--primary-color, #7C9EF8);
-  color: #FFFFFF;
+  background: var(--primary-gradient-hover);
+  box-shadow:
+    0 4px 12px rgba(16, 185, 129, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
 /* Inline search in quick actions */
@@ -1363,14 +1369,19 @@ const tabs = [
   align-items: center;
   gap: 6px;
   padding: 6px 8px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   user-select: none;
-  transition: background 0.15s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .tree-item:hover {
-  background: var(--floatHoverColor, rgba(255, 255, 255, 0.05));
+  background: linear-gradient(90deg,
+    rgba(124, 158, 248, 0.08) 0%,
+    rgba(124, 158, 248, 0.04) 100%
+  );
+  border-left: 2px solid var(--premium-blue);
+  padding-left: 6px;
 }
 
 .tree-item:hover .more-btn,
@@ -1379,7 +1390,15 @@ const tabs = [
 }
 
 .tree-item.active {
-  background: var(--selection-bg, rgba(101, 185, 244, 0.15));
+  background: linear-gradient(90deg,
+    rgba(16, 185, 129, 0.12) 0%,
+    rgba(16, 185, 129, 0.06) 100%
+  );
+  border-left: 3px solid var(--premium-emerald);
+  padding-left: 5px;
+  box-shadow:
+    0 2px 8px rgba(16, 185, 129, 0.2),
+    inset 0 1px 0 rgba(16, 185, 129, 0.1);
 }
 
 .tree-children {
@@ -1603,9 +1622,14 @@ const tabs = [
   padding: 8px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--text-color-secondary, #888);
+  color: var(--text-color-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(90deg,
+    rgba(124, 158, 248, 0.04) 0%,
+    transparent 100%
+  );
 }
 
 .section-icon {
@@ -1626,10 +1650,13 @@ const tabs = [
   position: fixed;
   z-index: 10000;
   min-width: 160px;
-  background: var(--bg-color, #252525);
-  border: 1px solid var(--border-color, #444);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(124, 158, 248, 0.1);
+  backdrop-filter: blur(20px);
   padding: 4px;
   animation: fadeIn 0.1s ease;
 }

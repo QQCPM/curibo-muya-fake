@@ -22,6 +22,7 @@
     "@inkdown/editor": "workspace:*",
     "@inkdown/shared": "workspace:*",
     "@lezer/highlight": "^1.2.3",
+    "@muyajs/core": "0.0.39",
     "@popperjs/core": "^2.11.8",
     "@supabase/supabase-js": "^2.90.1",
     "dayjs": "^1.11.19",

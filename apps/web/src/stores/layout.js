@@ -17,7 +17,7 @@ export const useLayoutStore = defineStore('layout', () => {
     const commandPaletteVisible = ref(false);
     // Right panel (for AI, etc.)
     const rightPanelVisible = ref(false);
-    const rightPanelWidth = ref(350);
+    const rightPanelWidth = ref(320);
     // Fullscreen mode
     const isFullscreen = ref(false);
     // Focus mode

@@ -36,9 +36,9 @@ const isNoteActive = computed(() => {
 <template>
   <nav class="nav-dock">
     <!-- Left Sidebar Toggle -->
-    <button 
+    <button
       class="dock-item toggle-btn"
-      :class="{ active: layoutStore.isSidebarVisible }"
+      :class="{ active: layoutStore.sidebarVisible }"
       title="Toggle Sidebar (Cmd+B)"
       @click="layoutStore.toggleSidebar"
     >
@@ -86,9 +86,9 @@ const isNoteActive = computed(() => {
     </button>
 
     <!-- Right Sidebar (AI) Toggle -->
-    <button 
+    <button
       class="dock-item toggle-btn"
-      :class="{ active: layoutStore.isRightPanelVisible }"
+      :class="{ active: layoutStore.rightPanelVisible }"
       title="Toggle AI Sidebar (Cmd+J)"
       @click="layoutStore.toggleRightPanel"
     >

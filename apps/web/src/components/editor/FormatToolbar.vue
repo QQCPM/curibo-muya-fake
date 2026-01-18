@@ -124,6 +124,16 @@ onMounted(() => {
   // Delay to ensure DOM is ready
   setTimeout(() => {
     scrollElement = attachScrollListener()
+
+    // Set up ResizeObserver for responsive toolbar width
+    const noteContainer = document.querySelector('.note-container') as HTMLElement
+    if (noteContainer) {
+      resizeObserver = new ResizeObserver(() => {
+        updateToolbarWidth()
+      })
+      resizeObserver.observe(noteContainer)
+      updateToolbarWidth() // Initial call
+    }
   }, 100)
 })
 
@@ -133,6 +143,9 @@ onUnmounted(() => {
   }
   if (scrollTimeout) {
     clearTimeout(scrollTimeout)
+  }
+  if (resizeObserver) {
+    resizeObserver.disconnect()
   }
 })
 
@@ -146,6 +159,31 @@ watch(() => props.scrollContainer, () => {
 
 // Toolbar visibility from preferences
 const showToolbar = computed(() => !preferencesStore.hideToolbar)
+
+// Reactive toolbar width for responsive sizing
+const toolbarMaxWidth = ref('900px')
+let resizeObserver: ResizeObserver | null = null
+
+// Watch note container width and adjust toolbar
+function updateToolbarWidth() {
+  const noteContainer = document.querySelector('.note-container') as HTMLElement
+  if (!noteContainer) return
+
+  const containerWidth = noteContainer.offsetWidth
+  const horizontalPadding = 80 // 40px on each side
+  const availableWidth = containerWidth - horizontalPadding
+
+  // Breakpoint system for button visibility
+  if (availableWidth > 820) {
+    toolbarMaxWidth.value = 'min(calc(100% - 80px), 900px)'
+  } else if (availableWidth > 520) {
+    toolbarMaxWidth.value = 'min(calc(100% - 80px), 700px)'
+  } else if (availableWidth > 320) {
+    toolbarMaxWidth.value = 'min(calc(100% - 60px), 500px)'
+  } else {
+    toolbarMaxWidth.value = 'calc(100% - 40px)'
+  }
+}
 </script>
 
 <template>
@@ -166,10 +204,10 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
           <button class="toolbar-btn" @click="format('em')" title="Italic (⌘I)">
             <Italic :size="15" :stroke-width="2.5" />
           </button>
-          <button class="toolbar-btn" @click="format('u')" title="Underline">
+          <button class="toolbar-btn hide-on-small" @click="format('u')" title="Underline">
             <Underline :size="15" :stroke-width="2.5" />
           </button>
-          <button class="toolbar-btn" @click="format('del')" title="Strikethrough">
+          <button class="toolbar-btn hide-on-small" @click="format('del')" title="Strikethrough">
             <Strikethrough :size="15" :stroke-width="2.5" />
           </button>
         </div>
@@ -184,7 +222,7 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
           <button class="toolbar-btn" @click="updateParagraph('heading 2')" title="Heading 2">
             <Heading2 :size="15" :stroke-width="2.5" />
           </button>
-          <button class="toolbar-btn" @click="updateParagraph('heading 3')" title="Heading 3">
+          <button class="toolbar-btn hide-on-small" @click="updateParagraph('heading 3')" title="Heading 3">
             <Heading3 :size="15" :stroke-width="2.5" />
           </button>
         </div>
@@ -199,13 +237,13 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
           <button class="toolbar-btn" @click="updateParagraph('ol-order')" title="Numbered List">
             <ListOrdered :size="15" :stroke-width="2.5" />
           </button>
-          <button class="toolbar-btn" @click="insertTaskList" title="Task List">
+          <button class="toolbar-btn hide-on-minimal" @click="insertTaskList" title="Task List">
             <CheckSquare :size="15" :stroke-width="2.5" />
           </button>
-          <button class="toolbar-btn" @click="updateParagraph('blockquote')" title="Quote">
+          <button class="toolbar-btn hide-on-minimal" @click="updateParagraph('blockquote')" title="Quote">
             <Quote :size="15" :stroke-width="2.5" />
           </button>
-          <button class="toolbar-btn" @click="insertCodeBlock" title="Code Block">
+          <button class="toolbar-btn hide-on-minimal" @click="insertCodeBlock" title="Code Block">
             <Code :size="15" :stroke-width="2.5" />
           </button>
         </div>
@@ -214,13 +252,13 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
 
         <!-- Media & Links -->
         <div class="toolbar-group">
-          <button class="toolbar-btn" @click="insertImage" title="Insert Image">
+          <button class="toolbar-btn hide-on-medium" @click="insertImage" title="Insert Image">
             <Image :size="15" :stroke-width="2.5" />
           </button>
           <button class="toolbar-btn" @click="format('link')" title="Insert Link">
             <Link2 :size="15" :stroke-width="2.5" />
           </button>
-          <button class="toolbar-btn" @click="insertTable" title="Insert Table">
+          <button class="toolbar-btn hide-on-medium" @click="insertTable" title="Insert Table">
             <Table2 :size="15" :stroke-width="2.5" />
           </button>
         </div>
@@ -280,6 +318,10 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
   /* Pill shape */
   border-radius: 999px;
 
+  /* Responsive width */
+  max-width: v-bind(toolbarMaxWidth);
+  transition: max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
   /* Glassmorphism - uses CSS variables for theme support */
   background: var(--glass-bg);
   backdrop-filter: blur(20px) saturate(180%);
@@ -295,7 +337,8 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
   /* Subtle hover lift */
   transition:
     box-shadow 0.3s ease,
-    transform 0.3s ease;
+    transform 0.3s ease,
+    max-width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .floating-toolbar:hover {
@@ -351,6 +394,46 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
 }
 
 /* ============================================
+ * RESPONSIVE BUTTON HIDING
+ * Smooth transitions for button visibility
+ * ============================================ */
+/* Hide Table, Image on medium screens */
+@media (max-width: 900px) {
+  .toolbar-btn.hide-on-medium {
+    opacity: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, width 0.2s, padding 0.2s;
+  }
+}
+
+/* Hide Underline, Strikethrough, H3 on small screens */
+@media (max-width: 700px) {
+  .toolbar-btn.hide-on-small {
+    opacity: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, width 0.2s, padding 0.2s;
+  }
+}
+
+/* Hide Lists, Quote, Code block on minimal screens */
+@media (max-width: 500px) {
+  .toolbar-btn.hide-on-minimal {
+    opacity: 0;
+    width: 0;
+    padding: 0;
+    margin: 0;
+    pointer-events: none;
+    transition: opacity 0.2s, width 0.2s, padding 0.2s;
+  }
+}
+
+/* ============================================
  * AI BUTTON - Special gradient styling
  * ============================================ */
 .ai-btn {
@@ -361,8 +444,8 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
   padding: 0 14px;
   height: 34px;
 
-  /* Gradient background */
-  background: linear-gradient(135deg, #A78BFA 0%, #818CF8 50%, #6366F1 100%);
+  /* Blue-green gradient background */
+  background: var(--primary-gradient);
   color: white;
   border-radius: 999px;
   font-size: 12px;
@@ -371,17 +454,17 @@ const showToolbar = computed(() => !preferencesStore.hideToolbar)
 
   /* Subtle glow */
   box-shadow:
-    0 2px 8px rgba(129, 140, 248, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 4px 16px rgba(16, 185, 129, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .ai-btn:hover {
-  background: linear-gradient(135deg, #9775FA 0%, #7072E8 50%, #5558E8 100%);
+  background: var(--primary-gradient-hover);
   color: white;
   transform: scale(1.05);
   box-shadow:
-    0 4px 16px rgba(129, 140, 248, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    0 6px 20px rgba(16, 185, 129, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .ai-btn:active {

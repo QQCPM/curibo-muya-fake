@@ -5,9 +5,25 @@
  * Handles SSE streaming and state management.
  */
 
+import { storeToRefs } from 'pinia'
 import { useAIStore } from '@/stores/ai'
+import { supabase } from '@/services/supabase'
 
-const API_BASE = '/api/agent'
+const API_BASE = '/api/v2/agent'
+
+// ============================================================================
+// Auth Helper
+// ============================================================================
+
+async function getAuthHeaders(): Promise<HeadersInit> {
+    const { data } = await supabase.auth.getSession()
+    const token = data.session?.access_token
+
+    return {
+        'Content-Type': 'application/json',
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+    }
+}
 
 // ============================================================================
 // Types
@@ -48,10 +64,9 @@ export async function sendToSecretary(options: AgentRequestOptions): Promise<str
 
         const response = await fetch(`${API_BASE}/secretary`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: await getAuthHeaders(),
             body: JSON.stringify({
-                input: options.input,
-                context: options.context,
+                message: options.input,
                 sessionId: options.sessionId,
                 stream: false,
             }),
@@ -85,7 +100,7 @@ export async function sendToChat(options: AgentRequestOptions): Promise<string> 
 
         const response = await fetch(`${API_BASE}/chat`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: await getAuthHeaders(),
             body: JSON.stringify({
                 input: options.input,
                 context: options.context,
@@ -205,10 +220,9 @@ async function streamFromAgent(
 
     const response = await fetch(`${API_BASE}/${agentType}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: await getAuthHeaders(),
         body: JSON.stringify({
-            input: options.input,
-            context: options.context,
+            message: options.input,
             sessionId: options.sessionId,
             stream: true,
         }),
@@ -303,6 +317,7 @@ async function processSSEResponse(
 
 export function useAIChat() {
     const store = useAIStore()
+    const { activeSession, status, isProcessing, error } = storeToRefs(store)
 
     async function sendMessage(
         message: string,
@@ -350,11 +365,11 @@ export function useAIChat() {
     }
 
     return {
-        // State
-        session: store.activeSession,
-        status: store.status,
-        isProcessing: store.isProcessing,
-        error: store.error,
+        // State (refs from storeToRefs for proper reactivity)
+        session: activeSession,
+        status,
+        isProcessing,
+        error,
 
         // Actions
         sendMessage,

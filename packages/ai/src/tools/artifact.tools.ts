@@ -26,7 +26,7 @@ interface Artifact {
     updatedAt?: string
 }
 
-interface ParsedHtmlStructure {
+export interface ParsedHtmlStructure {
     tag: string
     id?: string
     classes?: string[]
@@ -35,7 +35,7 @@ interface ParsedHtmlStructure {
     textContent?: string
 }
 
-interface CssRule {
+export interface CssRule {
     selector: string
     properties: Record<string, string>
 }
