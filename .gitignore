@@ -30,6 +30,12 @@ pnpm-debug.log*
 # Testing
 coverage/
 
+# TypeScript/Vue build artifacts in source directories
+apps/web/src/**/*.js
+apps/web/src/**/*.vue.js
+apps/web/src/**/*.d.ts
+!apps/web/src/vite-env.d.ts
+
 # Local Supabase
 supabase/.branches/
 supabase/.temp/
